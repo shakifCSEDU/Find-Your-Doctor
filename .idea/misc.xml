@@ -3,6 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_main.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_history.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_home.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_notifications.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_profile.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_tips.xml" value="0.17447916666666666" />
+        <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/menu/bottom_nav_menu.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_main.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/fragment_home.xml" value="0.17447916666666666" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/fragment_list.xml" value="0.17447916666666666" />

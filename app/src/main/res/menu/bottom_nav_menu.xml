@@ -4,21 +4,25 @@
     android:id="@+id/homeFragment"
     android:title="@string/home"
     android:icon="@drawable/icon_home"
-
     />
 <item
-    android:id="@+id/listFragment"
-    android:title="@string/list"
-    android:icon="@drawable/list"
+    android:id="@+id/historyFragment"
+    android:title="@string/history"
+    android:icon="@drawable/ic_history"
     />
 <item
-    android:id="@+id/newsFragment"
-    android:title="@string/news"
-    android:icon="@drawable/icon_note"
+    android:id="@+id/notificationsFragment"
+    android:title="@string/notifications"
+    android:icon="@drawable/ic_notifications"
+    />
+<item
+    android:id="@+id/tipsFragment"
+    android:title="@string/tips"
+    android:icon="@drawable/ic_tips"
     />
 <item
     android:id="@+id/profileFragment"
     android:title="@string/profile"
-    android:icon="@drawable/icon_person"
+    android:icon="@drawable/icon_profile"
     />
 </menu>
