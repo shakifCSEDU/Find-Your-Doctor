@@ -30,6 +30,9 @@ android {
 dependencies {
     def nav_version = "2.4.1"
 
+// shimmer RecyclerView
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
     // Java language implementation
     implementation "androidx.navigation:navigation-fragment:$nav_version"
     implementation "androidx.navigation:navigation-ui:$nav_version"

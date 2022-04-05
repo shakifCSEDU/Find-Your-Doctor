@@ -10,7 +10,7 @@
     <color name="red">#FF4646</color>
     <color name="yellow">#FFC114</color>
     <color name="green">#00C980</color>
-
+    <color name="shimmer_color">#DDDDDD</color>
 
 
     <color name="purple_200">#FFBB86FC</color>
