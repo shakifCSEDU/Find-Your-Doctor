@@ -18,4 +18,133 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string-array name="District">
+        <item> Barisal</item>
+        <item> Barguna</item>
+        <item> Bhola</item>
+        <item> Jhalokati</item>
+        <item> Patuakhali</item>
+        <item> Pirojpur</item>
+        <item> Bandarban</item>
+        <item> Brahmanbaria</item>
+        <item> Chandpur</item>
+        <item> Chittagong</item>
+        <item> Comilla</item>
+        <item> Feni</item>
+        <item> Khagrachhari</item>
+        <item> Lakshmipur</item>
+        <item> Noakhali</item>
+        <item> Rangamati</item>
+        <item> Dhaka</item>
+        <item> Faridpur</item>
+        <item> Gazipur</item>
+        <item> Gopalganj</item>
+        <item> Kishoreganj</item>
+        <item> Madaripur</item>
+        <item> Manikganj </item>
+        <item> Munshiganj</item>
+        <item> Narayanganj</item>
+        <item> Narsingdi</item>
+        <item> Rajbari </item>
+        <item> Shariatpur </item>
+        <item> Tangail</item>
+        <item> Bagerhat</item>
+        <item> Chuadanga</item>
+        <item> Jessore</item>
+        <item> Jhenaidah</item>
+        <item> Khulna</item>
+        <item> Kushtia</item>
+        <item> Magura</item>
+        <item> Meherpur</item>
+        <item> Narail</item>
+        <item> Satkhira</item>
+        <item> Jamalpur</item>
+        <item> Mymensingh</item>
+        <item> Netrokona</item>
+        <item> Sherpur</item>
+        <item> Bogura</item>
+        <item> Joypurhat</item>
+        <item> Naogaon</item>
+        <item> Natore</item>
+        <item> Chapainawabganj</item>
+        <item> Pabna</item>
+        <item> Rajshahi</item>
+        <item> Sirajganj</item>
+        <item> Dinajpur</item>
+        <item> Gaibandha</item>
+        <item> Kurigram</item>
+        <item> Lalmonirhat</item>
+        <item> Nilphamari</item>
+        <item> Panchagarh</item>
+        <item> Rangpur</item>
+        <item> Thakurgaon</item>
+        <item> Habiganj</item>
+        <item> Moulvibazar</item>
+        <item> Sunamganj</item>
+        <item> Sylhet</item>
+        <item> Cox\'s Bazar</item>
+
+    </string-array>
+
+    <string-array name="Dhaka_region">
+        <item> Abdullahpur</item>
+        <item>Uttara</item>
+        <item>Mirpur</item>
+        <item>Pallabi</item>
+        <item>Kazipara</item>
+        <item>Kafrul</item>
+        <item>Agargaon</item>
+        <item>Sher-e-Bangla Nagar</item>
+        <item>Cantonment area</item>
+        <item>Banani</item>
+        <item>Gulshan</item>
+        <item>Mohakhali</item>
+        <item>Bashundhara</item>
+        <item>Banasree</item>
+        <item>Baridhara</item>
+        <item>Uttarkhan</item>
+        <item>Dakshinkhan</item>
+        <item>Bawnia</item>
+        <item>Khilkhet</item>
+        <item>Tejgaon</item>
+        <item>Farmgate</item>
+        <item>Mohammadpur</item>
+        <item>Rampura</item>
+        <item>Badda</item>
+        <item>Satarkul</item>
+        <item>Beraid</item>
+        <item>Khilgaon</item>
+        <item>Vatara</item>
+        <item>Gabtali</item>
+        <item>Sadarghat</item>
+        <item>Hazaribagh</item>
+        <item>Dhanmondi</item>
+        <item>Ramna</item>
+        <item>Motijheel</item>
+        <item>Sabujbagh</item>
+        <item>Lalbagh</item>
+        <item>Kamalapur</item>
+        <item>Kamrangirchar</item>
+        <item>Islampur</item>
+        <item>Sadarghat</item>
+        <item>Wari</item>
+        <item>Kotwali</item>
+        <item>Sutrapur</item>
+        <item>Jurain</item>
+        <item>Dania</item>
+        <item>Demra</item>
+        <item> Shyampur</item>
+        <item>Nimtoli</item>
+        <item>Matuail</item>
+        <item>Shahbagh</item>
+        <item>Paltan</item>
+        <item>Ashulia</item>
+        <item>Birulia</item>
+        <item>Savar</item>
+        <item>Hasnabad</item>
+        <item>Jinjira</item>
+        <item>Tegharia</item>
+        <item>Jhilmil</item>
+    </string-array>
 </resources>
