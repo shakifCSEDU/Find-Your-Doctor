@@ -18,6 +18,9 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="sign_up_as">Sign Up As</string>
+    <string name="patient">Patient</string>
+    <string name="doctor">Doctor</string>
 
     <string-array name="District">
         <item> Barisal</item>

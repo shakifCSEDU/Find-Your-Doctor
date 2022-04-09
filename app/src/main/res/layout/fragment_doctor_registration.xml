@@ -6,24 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/green"
     android:orientation="vertical"
-    tools:context=".PatientRegistrationActivity">
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/toolBarLayoutId"
-        >
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/patientsignupId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#6A81FB"
-
-            app:title="Patient Registration"
-            app:titleTextColor="@color/cardview_light_background" />
-    </RelativeLayout>
-
+    >
 
     <ImageView
         android:layout_width="120dp"
@@ -142,9 +125,47 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Select your district"
+                android:hint="Select your region"
                 android:drawableLeft="@drawable/ic_baseline_add_location_24"
                 android:drawableStart="@drawable/ic_baseline_add_location_24"
+                android:drawablePadding="5dp"
+                android:inputType="text"
+                />
+
+            <EditText
+                android:id="@+id/detailsAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Type your chamber address in details"
+                android:drawableLeft="@drawable/ic_baseline_home_work_24"
+                android:drawableStart="@drawable/ic_baseline_home_work_24"
+                android:drawablePadding="5dp"
+                android:inputType="textPersonName">
+
+            </EditText>
+
+            <EditText
+                android:id="@+id/educationalQualification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Type your educational qualification"
+                android:drawableLeft="@drawable/ic_baseline_cast_for_education_24"
+                android:drawableStart="@drawable/ic_baseline_cast_for_education_24"
+                android:drawablePadding="5dp"
+                android:inputType="textPersonName">
+
+            </EditText>
+
+            <AutoCompleteTextView
+                android:id="@+id/regSpeciality"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:hint="Select your speciality"
+                android:drawableLeft="@drawable/ic_baseline_done_outline_24"
+                android:drawableStart="@drawable/ic_baseline_done_outline_24"
                 android:drawablePadding="5dp"
                 android:inputType="text"
                 />

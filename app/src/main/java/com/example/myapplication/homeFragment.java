@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 
-public class HomeFragment extends Fragment {
+public class homeFragment extends Fragment {
     private ShimmerFrameLayout shimmerFrameLayout;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

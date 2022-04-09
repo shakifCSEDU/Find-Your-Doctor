@@ -3,16 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.myapplication.HomeFragment"
+        android:name="com.example.myapplication.homeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/historyFragment"
-        android:name="com.example.myapplication.HistoryFragment"
+        android:name="com.example.myapplication.historyFragment"
         android:label="History"
         tools:layout="@layout/fragment_history" />
     <fragment
@@ -22,7 +22,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/tipsFragment"
-        android:name="com.example.myapplication.TipsFragment"
+        android:name="com.example.myapplication.tipsFragment"
         android:label="Tips"
         tools:layout="@layout/fragment_tips" />
     <fragment
@@ -30,4 +30,35 @@
         android:name="com.example.myapplication.profileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.myapplication.loginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_registrationDeciderFragment"
+            app:destination="@id/registrationDeciderFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrationDeciderFragment"
+        android:name="com.example.myapplication.registrationDeciderFragment"
+        android:label="Registration Decider" >
+        <action
+            android:id="@+id/action_registrationDeciderFragment_to_doctorRegistrationFragment"
+            app:destination="@id/doctorRegistrationFragment" />
+        <action
+            android:id="@+id/action_registrationDeciderFragment_to_patientRegisterFragment"
+            app:destination="@id/patientRegisterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctorRegistrationFragment"
+        android:name="com.example.myapplication.doctorRegistrationFragment"
+        android:label="Doctor Registration" />
+    <fragment
+        android:id="@+id/patientRegisterFragment"
+        android:name="com.example.myapplication.patientRegisterFragment"
+        android:label="Patient Register" />
 </navigation>
