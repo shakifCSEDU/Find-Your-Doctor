@@ -147,4 +147,45 @@
         <item>Tegharia</item>
         <item>Jhilmil</item>
     </string-array>
+
+    <string-array name="Doctor_Speciality">
+        <item>Immunologists</item>
+        <item>Anesthesiologists</item>
+        <item>Cardiologists</item>
+        <item>Colon and Rectal Surgeons</item>
+        <item>Critical Care Medicine Specialists</item>
+        <item>Dermatologists</item>
+        <item>Endocrinologists</item>
+        <item>Emergency Medicine Specialists</item>
+        <item>Family Physicians</item>
+        <item>Gastroenterologists</item>
+        <item>Geriatric Medicine Specialists</item>
+        <item>Hematologists</item>
+        <item>Hospice and Palliative Medicine Specialists</item>
+        <item>Infectious Disease Specialists</item>
+        <item>Internists</item>
+        <item>Medical Geneticists</item>
+        <item>Nephrologists</item>
+        <item>Neurologists</item>
+        <item>Obstetricians and Gynecologists</item>
+        <item>Oncologists</item>
+        <item>Ophthalmologists</item>
+        <item>Osteopaths</item>
+        <item>Otolaryngologists</item>
+        <item>Pathologists</item>
+        <item>Pediatricians</item>
+        <item>Psychiatrists</item>
+        <item>Plastic Surgeons</item>
+        <item>Podiatrists</item>
+        <item>Preventive Medicine Specialists</item>
+        <item>Psychiatrists</item>
+        <item>Pulmonologists</item>
+        <item>Radiologists</item>
+        <item>Rheumatologists</item>
+        <item>Sleep Medicine Specialists</item>
+        <item>Sports Medicine Specialists</item>
+        <item>General Surgeons</item>
+        <item>Urologists</item>
+
+    </string-array>
 </resources>
