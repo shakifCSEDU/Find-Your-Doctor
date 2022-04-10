@@ -86,10 +86,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:hint="Type your Password"
-                android:drawableLeft="@drawable/ic_outline_lock_24"
                 android:drawableStart="@drawable/ic_outline_lock_24"
+                android:drawableLeft="@drawable/ic_outline_lock_24"
                 android:drawablePadding="5dp"
+                android:hint="Type your Password"
                 android:inputType="textPassword">
 
             </EditText>
@@ -167,7 +167,7 @@
             </RadioGroup>
 
             <Button
-                android:id="@+id/btnSignUpGuardian"
+                android:id="@+id/btnSignUpPatient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"

@@ -7,8 +7,10 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/gradv2.xml" value="0.1245" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1245" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1245" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.1195" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/icon_home.xml" value="0.1245" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/icon_profile.xml" value="0.1245" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/round_bg.xml" value="0.1195" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_doctor_registration.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_login.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_main.xml" value="0.2484375" />
@@ -16,11 +18,11 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_registration_decider.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_sign_up.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/dropdown_item.xml" value="0.2484375" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_doctor_registration.xml" value="0.365625" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_doctor_registration.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_history.xml" value="0.2484375" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_login.xml" value="0.365625" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_patient_register.xml" value="0.365625" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_registration_decider.xml" value="0.365625" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_login.xml" value="0.2484375" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/fragment_patient_register.xml" value="0.2484375" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_row_layout.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/placeholder_row_home.xml" value="0.2484375" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/ic_clock.xml" value="0.1245" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_main.xml" value="0.17447916666666666" />

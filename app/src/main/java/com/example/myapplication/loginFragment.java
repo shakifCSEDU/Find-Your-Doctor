@@ -21,7 +21,7 @@ import com.google.android.material.textfield.TextInputLayout;
 
 public class loginFragment extends Fragment implements View.OnClickListener {
     private View view;
-     private TextInputLayout textInputEmail,textInputPass;
+    private TextInputLayout textInputEmail,textInputPass;
     private Button loginButton,forgetPasswordButton;
     private TextView needAcount;
     private NavController navController;
