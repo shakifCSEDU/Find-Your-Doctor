@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/shimmer_color"
-    tools:context=".loginFragment">
-
+    tools:context=".loginActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/loginImageId"
@@ -144,5 +143,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/forgetPasswordId"
         app:layout_constraintVertical_bias="0.238" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -191,4 +191,21 @@
         <item>Urologists</item>
 
     </string-array>
+    <string-array name="doctors_name">
+        <item>Dr Suraia parvin</item>
+        <item>Dr Kareem benzema</item>
+        <item>Dr Lionel Messi</item>
+        <item>Dr Neimer junior</item>
+        <item>Dr Asif Akbar</item>
+    </string-array>
+
+    <string-array name="patients_name">
+        <item>Prodipta Sen</item>
+        <item>Nafiul Adnan</item>
+        <item></item>
+        <item>Dr Neimer junior</item>
+        <item>Dr Asif Akbar</item>
+    </string-array>
+
+
 </resources>

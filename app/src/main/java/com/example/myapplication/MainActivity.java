@@ -33,10 +33,6 @@ public class MainActivity extends AppCompatActivity {
         navController = navHostFragment.getNavController();
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.loginFragment,
-                R.id.registrationDeciderFragment,
-                R.id.doctorRegistrationFragment,
-                R.id.patientRegisterFragment,
                 R.id.homeFragment,
                 R.id.historyFragment,
                 R.id.notificationsFragment,
