@@ -23,9 +23,10 @@ import com.google.firebase.auth.FirebaseAuth;
 public class patientRegistrationAcitivity extends AppCompatActivity {
     private AutoCompleteTextView districtName;
     private EditText firstName, lastName, regEmail, regPassword, regConfirmPassword, regMobileNumber;
-    private RadioButton genderBtn, maleBtn, femaleBtn;
+    private RadioButton  maleBtn, femaleBtn;
     private Button signUpBtn;
     private FirebaseAuth firebaseAuth;
+    private RadioGroup genderBtn;
 
 
     @SuppressLint("WrongViewCast")
@@ -127,16 +128,16 @@ public class patientRegistrationAcitivity extends AppCompatActivity {
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
-                            Toast.makeText(getApplicationContext(),"new user created successfully! Plz verify your email!", Toast.LENGTH_SHORT).show();
-                            Intent i = new Intent(getApplicationContext(),loginActivity.class);
-                            i.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
+                            if(task.isSuccessful()){
+                                Toast.makeText(patientRegistrationAcitivity.this, "User created successfully! Plz verify email !!", Toast.LENGTH_SHORT).show();
+                                Intent i = new Intent(getApplicationContext(), loginActivity.class);
+                                i.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
+                            }else{
+                                Toast.makeText(patientRegistrationAcitivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        else{
-                            Toast.makeText(getApplicationContext(),task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
+
                 });
 
 

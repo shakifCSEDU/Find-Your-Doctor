@@ -11,23 +11,28 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class loginActivity extends AppCompatActivity implements View.OnClickListener {
     private View view;
     private TextInputLayout textInputEmail,textInputPass;
     private Button loginButton,forgetPasswordButton;
     private TextView needAcount;
+    private FirebaseAuth firebaseAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+//        if(firebaseAuth.getCurrentUser() != null){
+//            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//            finish();
+//        }
+
         init();
         loginButton.setOnClickListener(this::onClick);
         needAcount.setOnClickListener(this::onClick);
-
-
-
 
     }
     private void init() {

@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,9 +23,11 @@ public class registrationDeciderActivity extends AppCompatActivity implements Vi
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.doctorRegistrationButtonId){
-
+            Intent intent = new Intent(this, doctorRegistrationActivity.class);
+            startActivity(intent);
         }else if(v.getId() == R.id.patientRegistrationButtonId){
-
+            Intent intent = new Intent(this, patientRegistrationAcitivity.class);
+            startActivity(intent);
         }
     }
 
