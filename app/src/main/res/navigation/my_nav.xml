@@ -35,4 +35,14 @@
         android:name="com.example.myapplication.profileFragment"
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/doctorHomeFragement"
+        android:name="com.example.myapplication.DoctorHomeFragement"
+        android:label="fragment_doctor_home_fragement"
+        tools:layout="@layout/fragment_doctor_home_fragement" />
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="com.example.myapplication.PatientHomeFragment"
+        android:label="fragment_patient_home"
+        tools:layout="@layout/fragment_patient_home" />
 </navigation>

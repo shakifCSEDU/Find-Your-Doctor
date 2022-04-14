@@ -12,11 +12,6 @@ import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link profileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class profileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -29,20 +24,13 @@ public class profileFragment extends Fragment {
     private String mParam2;
 
     private Button logOutButton;
+    String userType;
+    private View view;
 
     public profileFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment profileFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static profileFragment newInstance(String param1, String param2) {
         profileFragment fragment = new profileFragment();
         Bundle args = new Bundle();
@@ -64,8 +52,20 @@ public class profileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_profile, container, false);
+
+
+        MainActivity activity = (MainActivity) getActivity();
+        String myDataFromActivity = activity.getMyData();
+
+        if(myDataFromActivity != null){
+
+            if(myDataFromActivity.equals("1")){
+                view = inflater.inflate(R.layout.fragment_patient_profile, container, false);
+            }
+            else if(myDataFromActivity.equals("2")){
+                view = inflater.inflate(R.layout.fragment_doctor_profile, container, false);
+            }
+        }
 
         logOutButton = (Button) view.findViewById(R.id.logoutButton);
 

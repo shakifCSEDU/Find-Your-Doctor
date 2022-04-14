@@ -26,6 +26,7 @@ public class homeFragment extends Fragment {
     private View view;
     private Context context;
     Boolean isDoctor  = false;
+    String userType;
 
 
     @Override
@@ -33,12 +34,30 @@ public class homeFragment extends Fragment {
                              Bundle savedInstanceState) {
 
 
-        view = inflater.inflate(R.layout.fragment_home, container, false);
+        MainActivity activity = (MainActivity) getActivity();
+        String myDataFromActivity = activity.getMyData();
+
+        if(myDataFromActivity != null){
+
+            if(myDataFromActivity.equals("1")){
+                view = inflater.inflate(R.layout.fragment_patient_home, container, false);
+            }
+            else if(myDataFromActivity.equals("2")){
+                view = inflater.inflate(R.layout.fragment_doctor_home_fragement, container, false);
+            }
+        }
+
+
+
+
+        //view = inflater.inflate(R.layout.fragment_home, container, false);
+
         context = view.getContext();
-        shimmerFrameLayout = (ShimmerFrameLayout)view.findViewById(R.id.shimmerId);
-        shimmerFrameLayout.startShimmer();
 
+        //Toast.makeText(getContext(),userType,Toast.LENGTH_SHORT).show();
 
+        //       shimmerFrameLayout = (ShimmerFrameLayout)view.findViewById(R.id.shimmerId);
+//        shimmerFrameLayout.startShimmer();
 
         return view;
     }

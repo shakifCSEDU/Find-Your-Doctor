@@ -51,7 +51,7 @@ android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -88,7 +88,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -117,7 +117,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -146,7 +146,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -175,7 +175,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -204,7 +204,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -233,7 +233,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -261,7 +261,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -290,7 +290,7 @@ android:background="@color/white">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             android:paddingLeft="25dp">
 
@@ -311,13 +311,12 @@ android:background="@color/white">
                 android:textSize="15sp"
                 android:text="User Password"
                 android:fontFamily="monospace"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold"/>
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center_horizontal">
@@ -329,7 +328,8 @@ android:background="@color/white">
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/ic_baseline_rate_review_24"
-                android:text="See Reviews" />
+                android:text="See Reviews"
+                android:textSize="10dp"/>
 
             <Button
                 android:id="@+id/reviewsButton"
@@ -339,7 +339,24 @@ android:background="@color/white">
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:drawableLeft="@drawable/ic_baseline_edit_24"
-                android:text="Edit Profile" />
+                android:text="Edit Profile"
+                android:textSize="10dp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/logoutButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Log-out"
+                android:drawableLeft="@drawable/ic_baseline_exit_to_app_24"/>
+
+
         </LinearLayout>
 
 
