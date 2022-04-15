@@ -60,13 +60,6 @@ public class doctorRegistrationActivity extends AppCompatActivity {
         signUpBtn = findViewById(R.id.btnSignUpDoctor);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        if(firebaseAuth.getCurrentUser()!= null /*&& firebaseAuth.getCurrentUser().isEmailVerified()*/){
-            Toast.makeText(doctorRegistrationActivity.this, "User Created  ", Toast.LENGTH_SHORT).show();
-            Intent ie = new Intent(doctorRegistrationActivity.this, loginActivity.class);
-            ie.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(ie);
-            finish();
-        }
 
         String[] doctorRegion = getResources().getStringArray(R.array.Dhaka_region);
         ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(getApplicationContext(),R.layout.dropdown_item,doctorRegion);
@@ -205,6 +198,8 @@ public class doctorRegistrationActivity extends AppCompatActivity {
                                     }
                                 }
                             });
+
+
                         }else{
                             Toast.makeText(doctorRegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }

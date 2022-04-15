@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +23,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class loginActivity extends AppCompatActivity implements View.OnClickListener {
     private View view;
@@ -29,6 +35,8 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     private Button loginButton,forgetPasswordButton;
     private TextView needAccount;
     private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase userDatabaseReference;
+    private String current_User_Id, userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +79,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                 return;
             }
 
-            if(passText.length() < 6 ){
+            if(passText.length() <= 6 ){
                 textInputPass.setError("Password must be >= 6 Characters");
                 Toast.makeText(getApplicationContext(), "Please fill up the fields", Toast.LENGTH_SHORT).show();
                 return;
@@ -83,9 +91,23 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                     if(task.isSuccessful()){
                         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
                         if(firebaseUser.isEmailVerified()){
-                            Toast.makeText(loginActivity.this,"Logged In SuccessFully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-                            finish();
+                            current_User_Id = firebaseAuth.getCurrentUser().getUid();
+                            DatabaseReference userDatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(current_User_Id).child("userType");
+                            userDatabaseReference.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    String userType = snapshot.getValue().toString();
+                                    Toast.makeText(loginActivity.this,"Logged In SuccessFully" + userType, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                                    intent.putExtra("userType",userType);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
                         }
                         else{
                             firebaseUser.sendEmailVerification();
@@ -146,8 +168,24 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
     protected void onStart() {
         super.onStart();
         if(firebaseAuth.getCurrentUser()!= null && firebaseAuth.getCurrentUser().isEmailVerified()){
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-            finish();
+            current_User_Id = firebaseAuth.getCurrentUser().getUid();
+            DatabaseReference userDatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(current_User_Id).child("userType");
+            userDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String userType = snapshot.getValue().toString();
+                    //Toast.makeText(loginActivity.this,"Logged In SuccessFully" + userType, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("userType",userType);
+                    startActivity(intent);
+                    finish();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
         }
     }
 
