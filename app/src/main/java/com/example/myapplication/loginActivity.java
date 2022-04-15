@@ -164,14 +164,30 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        if(firebaseAuth.getCurrentUser()!= null && firebaseAuth.getCurrentUser().isEmailVerified()){
-//            startActivity(new Intent(getApplicationContext(),MainActivity.class));
-//            finish();
-//        }
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(firebaseAuth.getCurrentUser()!= null && firebaseAuth.getCurrentUser().isEmailVerified()){
+            current_User_Id = firebaseAuth.getCurrentUser().getUid();
+            DatabaseReference userDatabaseReference = FirebaseDatabase.getInstance().getReference("Users").child(current_User_Id).child("userType");
+            userDatabaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String userType = snapshot.getValue().toString();
+                    //Toast.makeText(loginActivity.this,"Logged In SuccessFully" + userType, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                    intent.putExtra("userType",userType);
+                    startActivity(intent);
+                    finish();
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+        }
+    }
 
 
 }

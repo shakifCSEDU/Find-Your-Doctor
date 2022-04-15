@@ -322,7 +322,7 @@ android:background="@color/white">
             android:gravity="center_horizontal">
 
             <Button
-                android:id="@+id/editButton"
+                android:id="@+id/reviewsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -332,7 +332,7 @@ android:background="@color/white">
                 android:textSize="10dp"/>
 
             <Button
-                android:id="@+id/reviewsButton"
+                android:id="@+id/editButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
