@@ -30,7 +30,7 @@
 
 
             <ImageView
-                android:id="@+id/patientImageViewId"
+                android:id="@+id/ImageViewId"
                 android:layout_width="200dp"
                 android:layout_height="0dp"
                 android:scaleType="centerCrop"
@@ -55,11 +55,11 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/patientImageViewId"
+                app:layout_constraintStart_toEndOf="@+id/ImageViewId"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/doctorTypeTextViewId"
+                android:id="@+id/instituteTextViewId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -70,11 +70,11 @@
                 android:textColor="@color/dark"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/patientImageViewId"
+                app:layout_constraintStart_toEndOf="@+id/ImageViewId"
                 app:layout_constraintTop_toBottomOf="@+id/doctorNameTextViewId" />
 
             <TextView
-                android:id="@+id/visitMoneyTextViewId"
+                android:id="@+id/qualificationTextViewId"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -85,8 +85,8 @@
                 android:textColor="@color/dark"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/patientImageViewId"
-                app:layout_constraintTop_toBottomOf="@+id/doctorTypeTextViewId" />
+                app:layout_constraintStart_toEndOf="@+id/ImageViewId"
+                app:layout_constraintTop_toBottomOf="@+id/instituteTextViewId" />
 
             <TextView
                 android:id="@+id/ratingTextViewId"
@@ -100,8 +100,8 @@
                 android:textColor="@color/dark"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/patientImageViewId"
-                app:layout_constraintTop_toBottomOf="@+id/visitMoneyTextViewId" />
+                app:layout_constraintStart_toEndOf="@+id/ImageViewId"
+                app:layout_constraintTop_toBottomOf="@+id/qualificationTextViewId" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

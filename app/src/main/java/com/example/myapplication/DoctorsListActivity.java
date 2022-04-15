@@ -82,6 +82,7 @@ public class DoctorsListActivity extends AppCompatActivity {
                     mp.put("qualification",doctorListDescription.educationalQualification);
                     mp.put("image",doctorListDescription.profileImage);
                     doctorsList.add(mp);
+
                 }
 
                 @Override
@@ -99,7 +100,7 @@ public class DoctorsListActivity extends AppCompatActivity {
 
 
 
-        DoctorListAdapter adapter = new DoctorListAdapter(getApplicationContext(),doctors,type);
+        DoctorListAdapter adapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
