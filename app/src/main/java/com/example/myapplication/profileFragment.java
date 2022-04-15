@@ -21,19 +21,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.Objects;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class profileFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private Button logOutButton;
     String userType;
@@ -49,27 +45,7 @@ public class profileFragment extends Fragment {
     private String fname, lname, email, phone, password, gender, location;
     //AlertDialog.Builder builder;
 
-    public profileFragment() {
-        // Required empty public constructor
-    }
-
-    public static profileFragment newInstance(String param1, String param2) {
-        profileFragment fragment = new profileFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    private String imageUrl = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,7 +73,7 @@ public class profileFragment extends Fragment {
                 genderTextView = view.findViewById(R.id.genderTxt);
                 locationTextView = view.findViewById(R.id.locationTxt);
                 editProfileButton = view.findViewById(R.id.editButton);
-
+                CircleImageView imageProfile = (CircleImageView)view.findViewById(R.id.profileImageId);
 
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
@@ -111,7 +87,11 @@ public class profileFragment extends Fragment {
                         locationTextView.setText(patient_user.getDistrict());
                         fname = patient_user.getFirstName();
                         lname = patient_user.getLastName();
-
+                        if(snapshot.child("profileImage").getValue() != null){
+                            imageUrl = snapshot.child("profileImage").getValue().toString();
+                            // Toast.makeText(getContext(),imageUrl,Toast.LENGTH_LONG).show();
+                            Picasso.get().load(imageUrl).placeholder(R.drawable.profile_picture).into(imageProfile);
+                        }
 
                     }
 
@@ -132,10 +112,8 @@ public class profileFragment extends Fragment {
                         intent.putExtra("password",passwordTextView.getText().toString());
                         intent.putExtra("gender",genderTextView.getText().toString());
                         intent.putExtra("district",locationTextView.getText().toString());
-
+                        intent.putExtra("profileImage",imageUrl);
                         startActivity(intent);
-
-
                     }
                 });
 
@@ -155,6 +133,8 @@ public class profileFragment extends Fragment {
                 chamberTextView = view.findViewById(R.id.chamberTxt);
                 eduQualificationTextView = view.findViewById(R.id.educationalQualificationTxt);
                 specialityTextView = view.findViewById(R.id.specialityTxt);
+                CircleImageView profileImage  = (CircleImageView)view.findViewById(R.id.profileImageId);
+
 
                 editProfileButton = view.findViewById(R.id.editButton);
 
@@ -174,6 +154,11 @@ public class profileFragment extends Fragment {
                         specialityTextView.setText(doctor_user.getSpeciality());
                         fname = doctor_user.getFirstName();
                         lname = doctor_user.getLastName();
+                        if(snapshot.child("profileImage").getValue() != null){
+                            imageUrl = snapshot.child("profileImage").getValue().toString();
+                            // Toast.makeText(getContext(),imageUrl,Toast.LENGTH_LONG).show();
+                            Picasso.get().load(imageUrl).placeholder(R.drawable.profile_picture).into(profileImage);
+                        }
 
                     }
 
@@ -198,7 +183,7 @@ public class profileFragment extends Fragment {
                         intent.putExtra("chamber",chamberTextView.getText().toString());
                         intent.putExtra("educationalQualification",eduQualificationTextView.getText().toString());
                         intent.putExtra("speciality",specialityTextView.getText().toString());
-
+                        intent.putExtra("profileImage",imageUrl);
                         startActivity(intent);
 
 

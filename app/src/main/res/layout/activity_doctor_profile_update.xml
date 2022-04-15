@@ -22,10 +22,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/endblue">
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/circleImage"
+                        android:id="@+id/profileImageViewId"
                         android:src="@drawable/profile_picture"
                         />
                     <ImageButton

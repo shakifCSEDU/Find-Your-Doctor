@@ -1,18 +1,27 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
@@ -20,55 +29,56 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.UUID;
 
-public class DoctorProfileUpdateActivity extends AppCompatActivity {
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class DoctorProfileUpdateActivity extends AppCompatActivity implements View.OnClickListener {
 
     private View view;
     private Button updateButton;
     private TextInputEditText emailTextInputEditText, firstNameTextInputEditText, lastNameTextInputEditText, phoneTextInputEditText, genderTextInputEditText,  passwordTextInputEditText;
     private TextInputEditText instituteTextInputEdittext, chamberTextInputEditText, eduQualificationTextInputEditText;
+
+    private Uri imageUri;
+
+    private StorageReference storageReference;
+
     private String email, firstName, lastName, phone, gender, region, password, userId, institute, chamber, eduQualification, speciality;
     private AutoCompleteTextView regionAutoCompleteTextView, specialityAutoCompleteTextView;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference;
+    private DatabaseReference databaseReference,databaseReference1;
     private FirebaseUser firebaseUser;
 
+
+    private boolean isProfileImageChange = false;
+    private Uri uri;
+    private ImageView profileImage;
+    private ImageButton imageButton;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private String imageUrl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_profile_update);
 
-        Intent intent = getIntent();
-        email = intent.getStringExtra("email");
-        firstName = intent.getStringExtra("firstName");
-        lastName = intent.getStringExtra("lastName");
-        phone = intent.getStringExtra("phoneNumber");
-        gender = intent.getStringExtra("gender");
-        region = intent.getStringExtra("region");
-        password = intent.getStringExtra("password");
-        institute = intent.getStringExtra("institute");
-        chamber = intent.getStringExtra("chamber");
-        eduQualification = intent.getStringExtra("educationalQualification");
-        speciality = intent.getStringExtra("speciality");
+        getIntentData();
 
-        emailTextInputEditText = findViewById(R.id.emailTxt);
-        firstNameTextInputEditText = findViewById(R.id.firstNameTxt);
-        lastNameTextInputEditText = findViewById(R.id.lastNameTxt);
-        phoneTextInputEditText = findViewById(R.id.phoneTxt);
-        genderTextInputEditText = findViewById(R.id.genderTxt);
-        regionAutoCompleteTextView = findViewById(R.id.regionTxt);
-        passwordTextInputEditText = findViewById(R.id.passwordTxt);
-        instituteTextInputEdittext =findViewById(R.id.instituteTxt);
-        chamberTextInputEditText = findViewById(R.id.chamberTxt);
-        eduQualificationTextInputEditText = findViewById(R.id.educationalQualificationTxt);
-        specialityAutoCompleteTextView = findViewById(R.id.specialityTxt);
+        init();
 
-        updateButton = findViewById(R.id.updateButton);
+
+
 
         String[] doctorRegion = getResources().getStringArray(R.array.Dhaka_region);
         ArrayAdapter<String> arrayAdapter1 = new ArrayAdapter<String>(getApplicationContext(),R.layout.dropdown_item,doctorRegion);
@@ -89,11 +99,24 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity {
         chamberTextInputEditText.setText(chamber);
         eduQualificationTextInputEditText.setText(eduQualification);
         specialityAutoCompleteTextView.setText(speciality);
-
+        if(imageUrl != null){
+            Picasso.get().load(imageUrl).placeholder(R.drawable.profile_picture).into(profileImage);
+        }
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         userId = firebaseAuth.getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(userId);
+
+
+
+        // uploading image
+        storageReference = FirebaseStorage.getInstance("gs://find-your-doctor-d7ff3.appspot.com").getReference("profileImage");
+        databaseReference1 = databaseReference.child("profileImage");
+
+        profileImage.setOnClickListener(this::onClick);
+
+        imageButton.setOnClickListener(this::onClick);
+
 
         emailTextInputEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +128,7 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isFirstNameChanged() || isLastNameChanged() || isPasswordChanged() || isPhoneNoChanged() || isGenderChanged() || isRegionChanged() || isChamberChanged() || isInstituteChanged() || isEduQualificationChanged() || isSpecialityChanged()){
+                if(isProfileImageChange ||  isFirstNameChanged() || isLastNameChanged() || isPasswordChanged() || isPhoneNoChanged() || isGenderChanged() || isRegionChanged() || isChamberChanged() || isInstituteChanged() || isEduQualificationChanged() || isSpecialityChanged()){
                     Toast.makeText(getApplicationContext(), "Data has been Updated", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(getApplicationContext(), "data not changed ", Toast.LENGTH_SHORT).show();
@@ -115,6 +138,23 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity {
 
 
     }
+    private void getIntentData(){
+        Intent intent = getIntent();
+        email = intent.getStringExtra("email");
+        firstName = intent.getStringExtra("firstName");
+        lastName = intent.getStringExtra("lastName");
+        phone = intent.getStringExtra("phoneNumber");
+        gender = intent.getStringExtra("gender");
+        region = intent.getStringExtra("region");
+        password = intent.getStringExtra("password");
+        institute = intent.getStringExtra("institute");
+        chamber = intent.getStringExtra("chamber");
+        eduQualification = intent.getStringExtra("educationalQualification");
+        speciality = intent.getStringExtra("speciality");
+        imageUrl = intent.getStringExtra("profileImage");
+    }
+
+
 
     private boolean isPhoneNoChanged() {
         if(!phone.equals(phoneTextInputEditText.getText().toString())){
@@ -243,5 +283,108 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity {
             return false;
         }
     }
+    private void init(){
 
+        profileImage = (ImageView)findViewById(R.id.profileImageViewId);
+        imageButton = (ImageButton)findViewById(R.id.selectImageButton);
+        emailTextInputEditText = findViewById(R.id.emailTxt);
+        firstNameTextInputEditText = findViewById(R.id.firstNameTxt);
+        lastNameTextInputEditText = findViewById(R.id.lastNameTxt);
+        phoneTextInputEditText = findViewById(R.id.phoneTxt);
+        genderTextInputEditText = findViewById(R.id.genderTxt);
+        regionAutoCompleteTextView = findViewById(R.id.regionTxt);
+        passwordTextInputEditText = findViewById(R.id.passwordTxt);
+        instituteTextInputEdittext =findViewById(R.id.instituteTxt);
+        chamberTextInputEditText = findViewById(R.id.chamberTxt);
+        eduQualificationTextInputEditText = findViewById(R.id.educationalQualificationTxt);
+        specialityAutoCompleteTextView = findViewById(R.id.specialityTxt);
+
+        updateButton = findViewById(R.id.updateButton);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId() == R.id.selectImageButton){
+            openFileChooser();
+        }
+    }
+
+
+    private void openFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+
+    private String getFileExtension(Uri uri){
+        ContentResolver contentResolver = getApplicationContext().getContentResolver();
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+        return  mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri));
+    }
+
+
+
+    private void uploadFile() {
+
+        if(uri != null){
+
+            ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Uploading Picture");
+            progressDialog.setMessage("Wait ... until the uploading is successfully completed..");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis()+"."+getFileExtension(uri));
+
+
+            fileReference.putFile(uri)
+                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String imageUrl = uri.toString();
+                                    databaseReference1.setValue(imageUrl);
+                                    isProfileImageChange = true;
+                                    progressDialog.dismiss();
+                                }
+                            });
+                        }
+
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(Exception e) {
+                            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
+                            progressDialog.dismiss();
+                        }
+                    }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onProgress(UploadTask.TaskSnapshot snapshot) {
+
+                        }
+                    });
+
+
+
+        }else{
+            Toast.makeText(getApplicationContext(),"No file Selected",Toast.LENGTH_SHORT).show();
+        }
+
+
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode,Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            uri = data.getData();
+            Picasso.get().load(uri).placeholder(R.drawable.profile_picture).into(profileImage);
+            uploadFile();
+        }
+    }
 }

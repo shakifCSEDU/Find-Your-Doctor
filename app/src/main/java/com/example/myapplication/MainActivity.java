@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
