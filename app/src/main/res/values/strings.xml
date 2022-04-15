@@ -197,6 +197,12 @@
         <item>Dr Lionel Messi</item>
         <item>Dr Neimer junior</item>
         <item>Dr Asif Akbar</item>
+        <item>Dr Kamal Khan</item>
+        <item>Dr Abul hasan</item>
+        <item>Dr Abdul gani</item>
+        <item>Dr Hemel odhikari</item>
+        <item>Dr Ashraful islam</item>
+
     </string-array>
 
     <string-array name="patients_name">
@@ -207,5 +213,21 @@
         <item>Dr Asif Akbar</item>
     </string-array>
 
+
+    <string-array name="month">
+        <item>January</item>
+        <item>February</item>
+        <item>March</item>
+        <item>April</item>
+        <item>May</item>
+        <item>June</item>
+        <item>July</item>
+        <item>August</item>
+        <item>September</item>
+        <item>October</item>
+        <item>November</item>
+        <item>December</item>
+
+    </string-array>
 
 </resources>

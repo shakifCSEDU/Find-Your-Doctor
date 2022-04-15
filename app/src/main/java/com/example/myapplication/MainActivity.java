@@ -21,6 +21,15 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
     private Bundle bundle;
+    private String  userType  = "1";
+
+
+
+    public String getUserType(){
+        return userType;
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
                 R.id.historyFragment,
                 R.id.notificationsFragment,
                 R.id.tipsFragment,
-                R.id.profileFragment
+                R.id.profileFragment,
+                R.id.historyFragment,
+                R.id.searchDoctorFragment
+
         ).build();
 
 
