@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -19,6 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DoctorsListActivity extends AppCompatActivity {
 
@@ -28,8 +31,16 @@ public class DoctorsListActivity extends AppCompatActivity {
     private FirebaseDatabase db;
     private DatabaseReference root;
     private String userID;
-    private ArrayList<String>userIDList=new ArrayList<String>();
-    ArrayList<HashMap<String,String>> doctorsList= new ArrayList<HashMap<String,String>>();
+    private ArrayList<String>userIDList = new ArrayList<String>();
+
+
+
+    List<DoctorUser>doctorUserList  = new ArrayList<DoctorUser>();
+    ArrayList<CustomRowItem>list;
+
+    //ArrayList<HashMap<String,String>> doctorsList= new ArrayList<HashMap<String,String>>();
+
+    String fName,lName,institute,qualification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +51,9 @@ public class DoctorsListActivity extends AppCompatActivity {
         this.setTitle("Doctors List"); // Set the toolbar name
         shimmerFrameLayout = (ShimmerFrameLayout)findViewById(R.id.shimmerDoctorsId);
         shimmerFrameLayout.startShimmer();
+        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
+
+
 
         String[] doctors =  getResources().getStringArray(R.array.doctors_name);
         String[] type = getResources().getStringArray(R.array.Doctor_Speciality);
@@ -48,17 +62,56 @@ public class DoctorsListActivity extends AppCompatActivity {
         doctorType = intent.getStringExtra("doctorType");
         location = intent.getStringExtra("location");
         visitDate = intent.getStringExtra("date");
-
-        db = FirebaseDatabase.getInstance();
+         db = FirebaseDatabase.getInstance();
         root = db.getReference("DoctorType").child(doctorType).child(location);
+
+        list = new ArrayList<CustomRowItem>();
+
+        DoctorListAdapter adapter = new DoctorListAdapter(getApplicationContext(),list);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+
 
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+
                 if(snapshot.exists()){
+
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         userID = dataSnapshot.child("uid").getValue(String.class);
-                        userIDList.add(userID);
+
+                        db.getReference("Users").child(userID).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                  if(snapshot.exists()){
+                                      DoctorUser doctor_user = snapshot.getValue(DoctorUser.class);
+
+                                      fName =  doctor_user.getFirstName();
+                                      lName =   doctor_user.getLastName();
+
+                                      institute = doctor_user.getInstitute();
+                                      qualification = doctor_user.getEducationalQualification();
+                                      list.add(new CustomRowItem((fName+" "+lName),institute,qualification,userID));
+                                  }
+                              adapter.notifyDataSetChanged();
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
+
+
                     }
 
 
@@ -71,25 +124,9 @@ public class DoctorsListActivity extends AppCompatActivity {
             }
         });
 
-        for(String list : userIDList){
-            db.getReference("Users").child(list).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    DoctorListDescription doctorListDescription = snapshot.getValue(DoctorListDescription.class);
-                    HashMap<String,String> mp = new HashMap<>();
-                    mp.put("doctorName",doctorListDescription.firstName+ " "+ doctorListDescription.lastName);
-                    mp.put("institute",doctorListDescription.institute);
-                    mp.put("qualification",doctorListDescription.educationalQualification);
-                    mp.put("image",doctorListDescription.profileImage);
-                    doctorsList.add(mp);
+        for(CustomRowItem user : list){
 
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
+            Toast.makeText(getApplicationContext(),user.getName()+" "+user.getEducationalQualification(),Toast.LENGTH_LONG).show();
         }
 
 
@@ -100,12 +137,9 @@ public class DoctorsListActivity extends AppCompatActivity {
 
 
 
-        DoctorListAdapter adapter = new DoctorListAdapter(getApplicationContext(),doctorsList);
 
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+
+
 
     }
 
@@ -113,4 +147,5 @@ public class DoctorsListActivity extends AppCompatActivity {
 
 class DoctorListDescription{
     String firstName, lastName, institute, educationalQualification, profileImage;
+
 }

@@ -21,13 +21,13 @@ import java.util.HashMap;
 public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.myViewHolder>{
 
     private Context context;
-    private ArrayList<HashMap<String,String>>doctorsList = null;
+    private ArrayList<CustomRowItem>list = null;
 
 
 
-    public DoctorListAdapter(Context context,ArrayList<HashMap<String,String>>doctorsList){
+    public DoctorListAdapter(Context context,ArrayList<CustomRowItem>list){
         this.context = context;
-        this.doctorsList = doctorsList;
+        this.list = list;
     }
 
     @NonNull
@@ -40,19 +40,20 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
 
     @Override
     public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
-        holder.doctorNameTextView.setText(doctorsList.get(position).get("doctorName"));
-        holder.instituteTextView.setText(doctorsList.get(position).get("institute"));
-        holder.qualification.setText(doctorsList.get(position).get("qualification"));
+        holder.doctorNameTextView.setText(list.get(position).getName());
+        holder.instituteTextView.setText(list.get(position).getInstitute());
+        holder.qualification.setText(list.get(position).getEducationalQualification());
         holder.rating.setText("3*");
-        Picasso.get().load(doctorsList.get(position).get("image")).placeholder(R.drawable.profile_picture).into(holder.imageView);
+        //Picasso.get().load()..placeholder(R.drawable.profile_picture).into(holder.imageView);
+        holder.imageView.setImageResource(R.drawable.profile_picture);
     }
 
     @Override
     public int getItemCount() {
-      return doctorsList.size();
+      return list.size();
     }
 
-    class myViewHolder extends RecyclerView.ViewHolder{
+    class myViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageView;
         TextView doctorNameTextView,instituteTextView,qualification,rating;
 
@@ -63,8 +64,24 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
            instituteTextView = (TextView)itemView.findViewById(R.id.instituteTextViewId);
            qualification = (TextView)itemView.findViewById(R.id.qualificationTextViewId);
            rating = (TextView)itemView.findViewById(R.id.ratingTextViewId);
+            itemView.setOnClickListener(this);
+        }
 
+        @Override
+        public void onClick(View view) {
+            int position = getAdapterPosition();
+            String name = list.get(position).getName();
+            String institute = list.get(position).getInstitute();
+            String qualification = list.get(position).getEducationalQualification();
+            String uid = list.get(position).getUid();
 
+            Intent intent = new Intent(context,DoctorDescription.class);
+            intent.putExtra("uid",uid);
+            intent.putExtra("name",name);
+            intent.putExtra("institute",institute);
+            intent.putExtra("qualification",qualification);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
 
         }
     }
