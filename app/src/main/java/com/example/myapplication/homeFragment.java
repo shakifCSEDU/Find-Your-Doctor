@@ -36,11 +36,11 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     private View view;
     private Context context;
     Boolean isDoctor  = false;
-    private int userType = 2;
-
 
     // Manage Slot UI element
     private GridView gridView;
+
+    private String userType;
 
 
 
@@ -49,7 +49,7 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
 
         MainActivity activity = (MainActivity) getActivity();
-        String myDataFromActivity = activity.getUserType();
+        userType = activity.getMyData();
 
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -57,7 +57,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         shimmerFrameLayout = (ShimmerFrameLayout)view.findViewById(R.id.shimmerId);
         shimmerFrameLayout.startShimmer();
 
-        Toast.makeText(context,myDataFromActivity+"...",Toast.LENGTH_LONG).show();
         return view;
     }
 
@@ -68,11 +67,11 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         homePageButton = (Button)view.findViewById(R.id.homePageButtonId);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewId);
 
-        if(userType == 1){ // This userType defines that this is doctor page.
+        if(userType.equals("2")){ // This userType defines that this is doctor page.
             homePageButton.setText("Manage Slot");
 
         }
-        else if(userType == 2){
+        else if(userType.equals("1")){
             homePageButton.setText("Search Doctor");
         }
 
@@ -89,10 +88,10 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if(view == homePageButton){
-            if(userType == 1){
+            if(userType.equals("2")){
                 navController.navigate(R.id.action_homeFragment_to_manageSlotFragment);
 
-            }else if(userType == 2){
+            }else if(userType.equals("1")){
                 navController.navigate(R.id.action_homeFragment_to_searchDoctorFragment);
             }
         }

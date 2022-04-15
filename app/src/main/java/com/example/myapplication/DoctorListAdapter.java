@@ -45,6 +45,7 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
             holder.rating.setText("3*");
             holder.visitMoney.setText("1000");
             Picasso.get().load(R.drawable.icon_profile).into(holder.imageView);
+
     }
 
     @Override

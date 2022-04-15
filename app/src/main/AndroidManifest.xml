@@ -24,6 +24,11 @@
         <activity
             android:name=".registrationDeciderActivity"
             android:exported="false" />
+        <activity android:name=".DoctorsListActivity"
+            android:exported="false"/>
+        <activity android:name=".DoctorDescription"
+            android:exported="false"/>
+
         <activity
             android:name=".loginActivity"
             android:exported="true">

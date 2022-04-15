@@ -24,6 +24,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class doctorRegistrationActivity extends AppCompatActivity {
@@ -35,6 +36,8 @@ public class doctorRegistrationActivity extends AppCompatActivity {
     private Button signUpBtn;
     private FirebaseAuth firebaseAuth;
     private RadioGroup genderBtn;
+    private String userID;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,20 +181,35 @@ public class doctorRegistrationActivity extends AppCompatActivity {
                             });
 
                             DoctorUser doctorUser = new DoctorUser(firstName,lastName, email, password, mobileNumber, region, institute, chamber,educationalQualification,speciality,finalGender,"2");
+                            userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                            databaseReference = FirebaseDatabase.getInstance().getReference();
+                            String key = databaseReference.push().getKey();
 
                             FirebaseDatabase.getInstance().getReference("Users")
-                                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                                    .child(userID)
                                     .setValue(doctorUser).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if(task.isSuccessful()){
-                                        Toast.makeText(doctorRegistrationActivity.this, "User created successfully!\n Plz verify email to log-in!!", Toast.LENGTH_SHORT).show();
-                                        Intent i = new Intent(getApplicationContext(), loginActivity.class);
-                                        i.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
-                                        i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                                        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(i);
-                                        finish();
+                                        FirebaseDatabase.getInstance().getReference("DoctorType").child(speciality).child(region).child(key).child("uid").setValue(userID).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                    Toast.makeText(doctorRegistrationActivity.this, "User created successfully!\n Plz verify email to log-in!!", Toast.LENGTH_SHORT).show();
+                                                    Intent i = new Intent(getApplicationContext(), loginActivity.class);
+                                                    i.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
+                                                    i.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+                                                    i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                    startActivity(i);
+                                                    finish();
+                                                }
+                                                else{
+                                                    Toast.makeText(doctorRegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                                                }
+                                            }
+                                        });
+
                                     }
                                     else {
                                         Toast.makeText(doctorRegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();

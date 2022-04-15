@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -74,8 +75,16 @@ public class searchDoctorFragment extends Fragment implements View.OnClickListen
             locationString = locationAutoCompleteTextView.getText().toString();
             chooseDateString = dateInputEditText.getText().toString();
             chooseDoctorTypeString = chooseDoctorType.getText().toString();
-            //navController.navigate(R.id.action_searchDoctorFragment_to_doctorListFragment);
+
+            if(locationString.isEmpty() || chooseDateString.isEmpty() || chooseDoctorTypeString.isEmpty()){
+                Toast.makeText(getActivity(), "Please Fill Up All The Fields", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Intent intent = new Intent(context,DoctorsListActivity.class);
+            intent.putExtra("location",locationString);
+            intent.putExtra("date",chooseDateString);
+            intent.putExtra("doctorType",chooseDoctorTypeString);
             startActivity(intent);
 
 

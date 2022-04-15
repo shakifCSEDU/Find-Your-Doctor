@@ -29,8 +29,6 @@
             android:id="@+id/location_auto_completeTextViewId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:hint="Search location "
             android:inputType="textAutoComplete" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,7 +42,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="32dp"
-        android:hint="Journey Date : "
+        android:hint="Visit Date : "
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -61,7 +59,6 @@
             android:layout_weight="1"
             android:clickable="false"
             android:focusable="false"
-
             android:focusableInTouchMode="false"
             android:fontFamily="monospace" />
 
@@ -79,7 +76,7 @@
         android:layout_marginTop="12dp"
 
         android:layout_marginEnd="32dp"
-        android:hint="Type :"
+        android:hint="Doctor Type :"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -93,9 +90,7 @@
             android:id="@+id/chooseDoctor_auto_completeTextViewId"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:hint="Choose doctor "
-            android:inputType="textAutoComplete" />
+            android:inputType="textAutoComplete"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 

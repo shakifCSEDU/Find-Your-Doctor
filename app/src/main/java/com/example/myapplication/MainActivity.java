@@ -23,16 +23,9 @@ public class MainActivity extends AppCompatActivity {
     private NavController navController;
     private BottomNavigationView bottomNavigationView;
     private Bundle bundle;
-    private String  userType  = "1";
 
 
-
-    public String getUserType(){
-        return userType;
-    }
-
-
-
+    private String userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onSupportNavigateUp() || navController.navigateUp();
     }
 
-    public String getMyData() {
+    public String getMyData (){
         return userType;
     }
 
