@@ -90,17 +90,25 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
         });
 
         root2 = db.getReference("Users").child(uid).child("Schedule").child(visitDate);
+
         root2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    int index;
-                    for(index = 1; index<=15; index++){
+
+
+                    for(int index = 1; index <= 15; index++){
+
                         String a = snapshot.child("S"+index).getValue(String.class);
+
                         String index1 = Integer.toString(index);
+
+
                         if(a.equals("1") || a.equals("2")){
-                            customGrids.add(new CustomGrid(R.drawable.slot_background_red,"S"+index1));
+                            customGrids.add(new CustomGrid(R.drawable.slot_background_green,"S"+index1));
                             seatSlot.put("S"+index,"100");
+
+
                         }
                         else{
                             customGrids.add(new CustomGrid(R.drawable.slot_background_white,"S"+index1));
@@ -114,7 +122,7 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
                 }
                 else{
                     int index;
-                    for(index = 1;index <=15; index++){
+                    for(index = 1;index <= 15; index++){
                         customGrids.add(new CustomGrid(R.drawable.slot_background_white, "S"+index));
                         seatSlot.put("S"+index, "0");
                     }
@@ -133,9 +141,14 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                count++;
                 String slot = "S" + Integer.toString(position + 1);
+
+
                 if(seatSlot.get(slot).equals("100")){
                     Toast.makeText(DoctorDescription.this, "This slot is already booked! Please choose another one!!", Toast.LENGTH_SHORT).show();
+
+
                 }
 
                 // if(seatMap.get(seat).equals("0")) {
@@ -178,7 +191,7 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
 
     }
 
-    private void getIntentData() {
+    private void  getIntentData() {
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
         visitDate = intent.getStringExtra("visitDate");
@@ -191,12 +204,17 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
     public void onClick(View view) {
 
         if(view == proceedButton){
+            if(count == 0){
+                Toast.makeText(getApplicationContext(),"plz select a slot to proceed",Toast.LENGTH_SHORT).show();
+                return;
+            }else{
 
-           Intent intent = new Intent(getApplicationContext(),CanPayActivity.class);
-           intent.putExtra("doctorUid",uid);
-           intent.putExtra("slotMap", (Serializable) seatSlot);
-           intent.putExtra("visitDate",visitDate);
-           startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(),CanPayActivity.class);
+                intent.putExtra("doctorUid",uid);
+                intent.putExtra("slotMap", (Serializable) seatSlot);
+                intent.putExtra("visitDate",visitDate);
+                startActivity(intent);
+            }
         }
     }
 }

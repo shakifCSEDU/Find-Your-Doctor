@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".doctorSlotShowerActitivity"
+            android:exported="false" />
+        <activity
+            android:name=".manageSlotAcitivity"
+            android:exported="false" />
+        <activity
             android:name=".confirmationActitivity"
             android:exported="false" />
         <activity

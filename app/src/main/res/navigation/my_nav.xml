@@ -15,11 +15,11 @@
             app:argType="string"
             android:defaultValue="default" />
         <action
-            android:id="@+id/action_homeFragment_to_manageSlotFragment"
-            app:destination="@id/manageSlotFragment" />
-        <action
             android:id="@+id/action_homeFragment_to_searchDoctorFragment"
             app:destination="@id/searchDoctorFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_manageSlotAcitivity"
+            app:destination="@id/manageSlotAcitivity" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
@@ -42,13 +42,13 @@
         android:label="Profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/manageSlotFragment"
-        android:name="com.example.myapplication.manageSlotFragment"
-        android:label="Manage Slot"
-        tools:layout="@layout/fragment_manage_slot" />
-    <fragment
         android:id="@+id/searchDoctorFragment"
         android:name="com.example.myapplication.searchDoctorFragment"
         android:label="Search Doctor"
         tools:layout="@layout/fragment_search_doctor" />
+    <activity
+        android:id="@+id/manageSlotAcitivity"
+        android:name="com.example.myapplication.manageSlotAcitivity"
+        android:label="activity_manage_slot_acitivity"
+        tools:layout="@layout/activity_manage_slot_acitivity" />
 </navigation>

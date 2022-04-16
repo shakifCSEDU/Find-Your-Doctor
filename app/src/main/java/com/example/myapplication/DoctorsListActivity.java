@@ -49,8 +49,12 @@ public class DoctorsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctors_list);
 
         this.setTitle("Doctors List"); // Set the toolbar name
+
+
         shimmerFrameLayout = (ShimmerFrameLayout)findViewById(R.id.shimmerDoctorsId);
         shimmerFrameLayout.startShimmer();
+
+
         recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
 
 
@@ -62,6 +66,10 @@ public class DoctorsListActivity extends AppCompatActivity {
         doctorType = intent.getStringExtra("doctorType");
         location = intent.getStringExtra("location");
         visitDate = intent.getStringExtra("date");
+
+
+
+
         db = FirebaseDatabase.getInstance();
         root = db.getReference("DoctorType").child(doctorType).child(location);
 

@@ -77,19 +77,13 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         homePageButton.setOnClickListener(this);
 
 
-
-
-
-
-
     }
 
     @Override
     public void onClick(View view) {
         if(view == homePageButton){
             if(userType.equals("2")){
-                navController.navigate(R.id.action_homeFragment_to_manageSlotFragment);
-
+                navController.navigate(R.id.action_homeFragment_to_manageSlotAcitivity);
             }else if(userType.equals("1")){
                 navController.navigate(R.id.action_homeFragment_to_searchDoctorFragment);
             }

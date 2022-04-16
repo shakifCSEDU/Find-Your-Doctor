@@ -88,7 +88,8 @@ public class searchDoctorFragment extends Fragment implements View.OnClickListen
             startActivity(intent);
 
 
-        }else if(view.getId() == R.id.chooseDateEditTextViewId){
+        }
+        else if(view.getId() == R.id.chooseDateEditTextViewId){
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
