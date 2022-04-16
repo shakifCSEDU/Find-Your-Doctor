@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -12,17 +13,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Map;
 
 public class CanPayActivity extends AppCompatActivity implements View.OnClickListener {
     private Button button;
     private CardView bKashCardView,rocketCardView,mCashCardView,nagadCardView;
+    private FirebaseUser firebaseUser;
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
+    private String doctorUid, patientUid, slots, visitDate;
     private String isSelected = null;
     private LayoutInflater layoutInflater;
     private  EditText userNumber;
     private View view;
     private  String payContactNo ;
     private String payContactNumber = "";
+    Map<String,String> slotMap;
+    private TextView doctorNameTextView,patientNameTextView,doctorPhoneNumberTextView,patientPhoneNumberTextView,visitDateTextView,visitTimeTextView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +51,61 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
         this.setTitle("Payment Method");
 
         initview();
+
+        doctorNameTextView = findViewById(R.id.doctorNameId);
+        patientNameTextView = findViewById(R.id.patientNameId);
+        doctorPhoneNumberTextView = findViewById(R.id.doctorPhoneNumberId);
+        patientPhoneNumberTextView = findViewById(R.id.patientPhoneNumberId);
+        visitDateTextView = findViewById(R.id.visitDateId);
+        visitTimeTextView = findViewById(R.id.visitTimeId);
+
+        Intent intent = getIntent();
+        doctorUid = intent.getStringExtra("doctorUid");
+        slotMap = (Map<String, String>)intent.getSerializableExtra("slotMap");
+        visitDate = intent.getStringExtra("visitDate");
+        slots = " ";
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        patientUid = firebaseUser.getUid();
+
+        Toast.makeText(CanPayActivity.this,"Date" + visitDate, Toast.LENGTH_LONG).show();
+
+        databaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(doctorUid);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    DoctorUser doctorUser = snapshot.getValue(DoctorUser.class);
+                    doctorNameTextView.setText(doctorUser.getFirstName() + " "+ doctorUser.getLastName());
+                    doctorPhoneNumberTextView.setText(doctorUser.getMobileNumber());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        databaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(patientUid);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    patientUser patient_User = snapshot.getValue(patientUser.class);
+                    patientNameTextView.setText(patient_User.getFirstName() + " "+ patient_User.getLastName());
+                    doctorPhoneNumberTextView.setText(patient_User.getMobileNumber());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        visitDateTextView.setText(visitDate);
+
+
+
 
         bKashCardView.setOnClickListener(this::onClick);
         nagadCardView.setOnClickListener(this::onClick);
@@ -67,6 +143,42 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
             setCardView("Rocket",rocketCardView,R.drawable.rocket);
         }
         if(v.getId() == R.id.payButtonId){
+            firebaseDatabase = FirebaseDatabase.getInstance();
+            databaseReference = firebaseDatabase.getReference("Users").child(doctorUid).child("Schedule").child(visitDate);
+            databaseReference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()) {
+                        int index;
+                        for (index = 1; index <= 15; index++) {
+                            String seatIndex = "S" + index;
+                            if (slotMap.get(seatIndex).equals("1")) {
+                                databaseReference.child(seatIndex).setValue("1");
+                            }
+                        }
+                        Toast.makeText(CanPayActivity.this, "Databsse updated", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        databaseReference.setValue(slotMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(Task<Void> task) {
+                                Toast.makeText(CanPayActivity.this, "Databsse created", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure( Exception e) {
+                                Toast.makeText(CanPayActivity.this, "Databse creation failed", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
             Intent intent = new Intent(getApplicationContext(),confirmationActitivity.class);
             startActivity(intent);
         }

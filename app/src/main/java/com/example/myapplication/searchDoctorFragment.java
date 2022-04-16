@@ -98,7 +98,7 @@ public class searchDoctorFragment extends Fragment implements View.OnClickListen
             DatePickerDialog datePickerDialog = new DatePickerDialog(view.getContext(), new DatePickerDialog.OnDateSetListener() {
                 @Override
                 public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                       dateInputEditText.setText(date +" / "+month+" / "+year);
+                       dateInputEditText.setText(date +" - "+(month+1)+" - "+year);
                 }
             },year,month,date);
           datePickerDialog.show();

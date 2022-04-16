@@ -31,14 +31,14 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="Bus Name     :"
+                    android:text="Doctor Name :"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     />
 
                 <TextView
-                    android:id="@+id/busFareID"
+                    android:id="@+id/doctorNameId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -60,13 +60,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="From         :"
+                    android:text="Patient Name:"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/fromID"
+                    android:id="@+id/patientNameId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -88,13 +88,13 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="To           :"
+                    android:text="Doctor Phone Number:"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/toID"
+                    android:id="@+id/doctorPhoneNumberId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -116,13 +116,41 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="Journey Date :"
+                    android:text="Patient Phone Number:"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/patientPhoneNumberId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="monospace"
+                    android:text="Rajshahi"
+                    android:textColor="@color/black"
+                    android:textSize="15sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:fontFamily="monospace"
+                    android:text="Visit Date :"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/busJourneyDateId"
+                    android:id="@+id/visitDateId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -145,47 +173,19 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="BusCondition :"
+                    android:text="Visit Time:"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
                     />
 
                 <TextView
-                    android:id="@+id/busConditionId"
+                    android:id="@+id/visitTimeId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
                     android:text="non-A/C"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="monospace"
-                    android:text="Total Seat   :"
-                    android:textColor="@color/black"
-                    android:textSize="15sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/totalSeatId"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:fontFamily="monospace"
-                    android:text="04"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -202,21 +202,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="Total Cost   :"
+                    android:text="Booking Cost:"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/totalCostId"
+                    android:id="@+id/bookingCostId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="2000"
+                    android:text="50 Taka"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
-
             </LinearLayout>
 
         </LinearLayout>

@@ -11,7 +11,7 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImageViewId"
         android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +27,10 @@
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.269">
+        app:layout_constraintVertical_bias="0.236">
 
 
         <LinearLayout
@@ -163,10 +164,10 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
+        app:layout_constraintHorizontal_bias="0.099"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.118" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <Button
         android:id="@+id/locationButtonId"
@@ -177,10 +178,10 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.102"
+        app:layout_constraintHorizontal_bias="0.098"
         app:layout_constraintStart_toEndOf="@+id/reviewsButtonId"
         app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.063" />
 
     <TextView
         android:id="@+id/ratingTextViewId"
@@ -194,16 +195,16 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.409"
         app:layout_constraintStart_toEndOf="@+id/locationButtonId"
         app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.115" />
+        app:layout_constraintVertical_bias="0.06" />
+
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="12dp"
         android:fontFamily="@font/courgette"
         android:text="Avaiable Slot"
 
@@ -213,7 +214,6 @@
         app:layout_constraintHorizontal_bias="0.011"
         app:layout_constraintStart_toStartOf="@+id/reviewsButtonId"
         app:layout_constraintTop_toBottomOf="@+id/reviewsButtonId" />
-
 
     <Button
         android:id="@+id/proceedButtonId"
@@ -225,12 +225,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/gridViewId"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.346" />
 
     <GridView
         android:id="@+id/gridViewId"
-        android:layout_width="409dp"
-        android:layout_height="178dp"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
         android:layout_marginStart="8dp"
         android:numColumns="5"
         android:layout_marginTop="8dp"

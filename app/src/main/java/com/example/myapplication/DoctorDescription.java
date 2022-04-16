@@ -15,12 +15,18 @@ import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,16 +35,18 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
 
 
     private GridView gridView;
-
     private FirebaseDatabase db, db2;
     private DatabaseReference root, root2;
 
-    int[] isSelectSeat = new int[25];
-    int totalSeats = 0;
+    int[] isSelectSlot = new int[25];
+    int totalSlots = 0;
 
    private String name,qualification,uid,institution,visitDate;
    private TextView doctorNameTextView, chamberTextView, instituteTextView, qualificationTextView, mobileNumberTextView;
    private Button proceedButton;
+   Map<String, String> seatSlot = new HashMap<>();
+   private String slotName = " ";
+   private int count = 0;
 
 
 
@@ -49,17 +57,20 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
 
         this.setTitle("Doctor Description");
 
-
-
         initView();
 
         getIntentData();
+        
+        Toast.makeText(DoctorDescription.this,"Date" + visitDate, Toast.LENGTH_LONG).show();
 
 
         // Firebase database called ...
         db = FirebaseDatabase.getInstance();
         root = db.getReference("Users").child(uid);
-        Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
+        ArrayList<CustomGrid>customGrids = new ArrayList<CustomGrid>();
+        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(getApplicationContext() ,customGrids);
+        gridView.setAdapter(descriptionAdapter);
+
 
         root.addValueEventListener(new ValueEventListener() {
             @Override
@@ -78,62 +89,75 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
             }
         });
 
-        // Setting GridView.....
-        ArrayList<CustomGrid>customGrids = new ArrayList<CustomGrid>();
-        for(int i = 1 ; i<16 ; i++){
-            customGrids.add(new CustomGrid(R.drawable.slot_background_white,"s"+i));
-        }
-        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(getApplicationContext() ,customGrids);
-        gridView.setAdapter(descriptionAdapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        root2 = db.getReference("Users").child(uid).child("Schedule").child(visitDate);
+        root2.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                view.setBackgroundColor(Color.parseColor("#00FF00"));
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    int index;
+                    for(index = 1; index<=15; index++){
+                        String a = snapshot.child("S"+index).getValue(String.class);
+                        String index1 = Integer.toString(index);
+                        if(a.equals("1") || a.equals("2")){
+                            customGrids.add(new CustomGrid(R.drawable.slot_background_red,"S"+index1));
+                            seatSlot.put("S"+index,"100");
+                        }
+                        else{
+                            customGrids.add(new CustomGrid(R.drawable.slot_background_white,"S"+index1));
+                            seatSlot.put("S"+index, a);
+                        }
+
+
+                    }
+                    descriptionAdapter.notifyDataSetChanged();
+
+                }
+                else{
+                    int index;
+                    for(index = 1;index <=15; index++){
+                        customGrids.add(new CustomGrid(R.drawable.slot_background_white, "S"+index));
+                        seatSlot.put("S"+index, "0");
+                    }
+
+                    descriptionAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 
 
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String slot = "S" + Integer.toString(position + 1);
+                if(seatSlot.get(slot).equals("100")){
+                    Toast.makeText(DoctorDescription.this, "This slot is already booked! Please choose another one!!", Toast.LENGTH_SHORT).show();
+                }
 
-//        root2 = db.getReference("Users").child(uid).child("Schedule").child(visitDate);
-//
-//        root2.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                if(snapshot.exists()){
-//                    int i;
-//                    for(i = 1; i<=30; i++){
-//                        String a = snapshot.child("S"+i).getValue(String.class);
-//                        String i1 = Integer.toString(i);
-//                        if(a.equals("1") || a.equals("2")){
-//                            dates.add(i1+"");
-//                            image.add(R.drawable.slot_background_red);
-//                            slotMap.put("S"+i,"100");
-//                        }
-//                        else{
-//                            dates.add(i1+"");
-//                            image.add(R.drawable.slot_background_white);
-//                            slotMap.put("S"+i,a);
-//                        }
-//                    }
-//                    descriptionAdapter.notifyDataSetChanged();
-//                }
-//                else {
-//                    Toast.makeText(getApplicationContext(), "Data does not exist", Toast.LENGTH_LONG).show();
-//                    for (int i = 1; i <= 30; i++) {
-//                        dates.add(i + "");
-//                        image.add(R.drawable.slot_background_white);
-//                        slotMap.put("S" + i, "0");
-//                    }
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
+                // if(seatMap.get(seat).equals("0")) {
+                if (isSelectSlot[position] == 0) {
+
+                    if(seatSlot.get(slot).equals("0")){
+                        view.setBackgroundColor(Color.parseColor("#00FF00"));
+                        Toast.makeText(getApplicationContext(), "You Selected Slot Number :" + (position + 1), Toast.LENGTH_SHORT).show();
+                        isSelectSlot[position] = 1;
+                        seatSlot.put(slot,"1");
+                    }
+
+
+                } else if(isSelectSlot[position] == 1){
+                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    Toast.makeText(getApplicationContext(), "You Unselected Seat Number :" + (position + 1), Toast.LENGTH_SHORT).show();
+                    isSelectSlot[position] = 0;
+                    seatSlot.put(slot,"0");
+                }
+            }
+        });
+
 
          proceedButton.setOnClickListener(this);
 
@@ -166,17 +190,13 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View view) {
 
-
         if(view == proceedButton){
+
            Intent intent = new Intent(getApplicationContext(),CanPayActivity.class);
+           intent.putExtra("doctorUid",uid);
+           intent.putExtra("slotMap", (Serializable) seatSlot);
+           intent.putExtra("visitDate",visitDate);
            startActivity(intent);
-
         }
-
-
-
-
-
-
     }
 }

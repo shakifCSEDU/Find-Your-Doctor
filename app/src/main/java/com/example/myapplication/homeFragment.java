@@ -39,7 +39,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
     // Manage Slot UI element
     private GridView gridView;
-
     private String userType;
 
 
