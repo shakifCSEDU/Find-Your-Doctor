@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -30,8 +32,12 @@ public class manageSlotFragment extends Fragment {
 
         view =  inflater.inflate(R.layout.fragment_manage_slot, container, false);
         monthAutoCompleteTextView = (AutoCompleteTextView)view.findViewById(R.id.month_auto_completeTextViewId);
-        String[] from = getResources().getStringArray(R.array.month);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.dropdown_item,from);
+        gridView = (GridView)view.findViewById(R.id.manageSlotGridViewId);
+
+
+        // Auto complete textView field...
+        String[] month = getResources().getStringArray(R.array.month);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(),R.layout.dropdown_item,month);
         monthAutoCompleteTextView.setAdapter(arrayAdapter);
         monthString = monthAutoCompleteTextView.getText().toString();
 
@@ -41,8 +47,6 @@ public class manageSlotFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-       gridView = (GridView)view.findViewById(R.id.manageSlotGridViewId);
-
 
 
         if(monthString.isEmpty()){
@@ -50,30 +54,18 @@ public class manageSlotFragment extends Fragment {
             monthAutoCompleteTextView.requestFocus();
             return;
         }
-        int totalDate = 30;
-        if(monthString.equals("January") || monthString.equals("March") || monthString.equals("May") ||
-                monthString.equals("July") || monthString.equals("August") || monthString.equals("October") ||
-                monthString.equals("December")){
-               totalDate = 31;
-        }else if(monthString.equals("February"))totalDate = 28;
+        ArrayList<CustomGrid>customGrids = new ArrayList<CustomGrid>();
 
-
-
-       ArrayList<gridItemClass>list = new ArrayList<>();
-
-       list.add(new gridItemClass(R.drawable.slot_background_green,"1"));
-       list.add(new gridItemClass(R.drawable.slot_background_red,"2"));
-
-       for(int i = 3 ; i<= totalDate ; i++)
-       {
-           list.add(new gridItemClass(R.drawable.slot_background_white,i+""));
-       }
-        gridView.setVisibility(View.VISIBLE);
-       gridView.setVisibility(View.VISIBLE);
-       GridAdapter adapter  = new GridAdapter(view.getContext(),list);
-       gridView.setAdapter(adapter);
-
-
-
+        for(int i = 1 ; i<16 ; i++){
+            customGrids.add(new CustomGrid(R.drawable.slot_background_white,"s"+i));
+        }
+        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(view.getContext() ,customGrids);
+        gridView.setAdapter(descriptionAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                view.setBackgroundColor(Color.parseColor("#00FF00"));
+            }
+        });
     }
 }

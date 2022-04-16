@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,50 +13,53 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class DoctorDescriptionAdapter extends RecyclerView.Adapter<DoctorDescriptionAdapter.MyViewHoler>{
+public class DoctorDescriptionAdapter extends BaseAdapter {
     private Context context;
 
-    private ArrayList<String>date;
-    private ArrayList<Integer>image;
+    private ArrayList<CustomGrid>customGrids = null;
 
-    public DoctorDescriptionAdapter(Context context,ArrayList<Integer>image , ArrayList<String>date){
+    public DoctorDescriptionAdapter(Context context,ArrayList<CustomGrid>customGrids){
         this.context = context;
-        this.date = date;
-        this.image = image;
+        this.customGrids = customGrids;
     }
 
-    @NonNull
+
     @Override
-    public MyViewHoler onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.grid_item,parent,false);
-        MyViewHoler viewHoler = new MyViewHoler(view);
-        return viewHoler;
+    public int getCount() {
+        return customGrids.size();
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHoler holder, int position) {
-           holder.textView.setText(date.get(position));
-           Picasso.get().load(image.get(position)).placeholder(R.drawable.slot_background_white).into(holder.circleImageView);
+    public Object getItem(int i) {
+        return customGrids.get(i);
     }
 
     @Override
-    public int getItemCount() {
-        return date.size();
+    public long getItemId(int i) {
+        return i;
     }
 
-    class MyViewHoler extends RecyclerView.ViewHolder{
-        CircleImageView circleImageView;
-        TextView textView;
+    @Override
+    public View getView(int i, View view, ViewGroup viewGroup) {
 
-        public MyViewHoler(@NonNull View itemView) {
-            super(itemView);
-        circleImageView = (CircleImageView)itemView.findViewById(R.id.slot_imageViewId);
-        textView = (TextView)itemView.findViewById(R.id.gridTextViewId);
 
+        if(view == null) {
+            view = LayoutInflater.from(context).inflate(R.layout.grid_item,viewGroup,false);
+
+            CircleImageView imageView =  view.findViewById(R.id.slot_imageViewId);
+            TextView textView = (TextView)view.findViewById(R.id.gridTextViewId);
+
+            Picasso.get().load(customGrids.get(i).getImage()).placeholder(R.drawable.slot_background_white).into(imageView);
+            textView.setText(customGrids.get(i).getSlotName());
         }
+
+        return view;
     }
 }
+

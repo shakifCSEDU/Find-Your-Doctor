@@ -203,7 +203,7 @@
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:fontFamily="@font/courgette"
         android:text="Avaiable Slot"
 
@@ -214,17 +214,6 @@
         app:layout_constraintStart_toStartOf="@+id/reviewsButtonId"
         app:layout_constraintTop_toBottomOf="@+id/reviewsButtonId" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewId"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="4dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.112" />
 
     <Button
         android:id="@+id/proceedButtonId"
@@ -234,9 +223,20 @@
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewId"
-        app:layout_constraintVertical_bias="0.439" />
+        app:layout_constraintTop_toBottomOf="@+id/gridViewId"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <GridView
+        android:id="@+id/gridViewId"
+        android:layout_width="409dp"
+        android:layout_height="178dp"
+        android:layout_marginStart="8dp"
+        android:numColumns="5"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

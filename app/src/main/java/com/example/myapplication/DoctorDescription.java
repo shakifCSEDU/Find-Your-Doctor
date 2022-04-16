@@ -6,7 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +27,11 @@ import java.util.Map;
 public class DoctorDescription extends AppCompatActivity {
 
 
-    private RecyclerView recyclerView;
+    private GridView gridView;
+
     private FirebaseDatabase db, db2;
     private DatabaseReference root, root2;
 
-    ArrayList<String>dates = new ArrayList<String>();
-    ArrayList<Integer>image = new ArrayList<Integer>();
     int[] isSelectSeat = new int[25];
     int totalSeats = 0;
 
@@ -41,17 +44,15 @@ public class DoctorDescription extends AppCompatActivity {
         setContentView(R.layout.activity_doctor_description);
 
         this.setTitle("Doctor Description");
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
 
-        doctorNameTextView = findViewById(R.id.doctorNameDescription);
-        chamberTextView = findViewById(R.id.chamberDescription);
-        instituteTextView = findViewById(R.id.instituteDescription);
-        qualificationTextView = findViewById(R.id.qualificationDescription);
-        mobileNumberTextView = findViewById(R.id.mobileNumberDescription);
-        recyclerView = findViewById(R.id.recyclerViewId);
+
+
+        initView();
 
         getIntentData();
 
+
+        // Firebase database called ...
         db = FirebaseDatabase.getInstance();
         root = db.getReference("Users").child(uid);
         Toast.makeText(getApplicationContext(), uid, Toast.LENGTH_LONG).show();
@@ -73,12 +74,21 @@ public class DoctorDescription extends AppCompatActivity {
             }
         });
 
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(getApplicationContext() , image , dates);
-        Map<String, String> slotMap = new HashMap<>();
-        recyclerView.setAdapter(descriptionAdapter);
+        // Setting GridView.....
+        ArrayList<CustomGrid>customGrids = new ArrayList<CustomGrid>();
+        for(int i = 1 ; i<16 ; i++){
+            customGrids.add(new CustomGrid(R.drawable.slot_background_white,"s"+i));
+        }
+        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(getApplicationContext() ,customGrids);
+        gridView.setAdapter(descriptionAdapter);
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                view.setBackgroundColor(Color.parseColor("#00FF00"));
+            }
+        });
+
+
 
 //        root2 = db.getReference("Users").child(uid).child("Schedule").child(visitDate);
 //
@@ -128,6 +138,15 @@ public class DoctorDescription extends AppCompatActivity {
 
     }
 
+    private void initView() {
+        gridView = (GridView)findViewById(R.id.gridViewId);
+        doctorNameTextView = findViewById(R.id.doctorNameDescription);
+        chamberTextView = findViewById(R.id.chamberDescription);
+        instituteTextView = findViewById(R.id.instituteDescription);
+        qualificationTextView = findViewById(R.id.qualificationDescription);
+        mobileNumberTextView = findViewById(R.id.mobileNumberDescription);
+    }
+
     private void getIntentData() {
         Intent intent = getIntent();
         uid = intent.getStringExtra("uid");
@@ -135,9 +154,5 @@ public class DoctorDescription extends AppCompatActivity {
         name = intent.getStringExtra("name");
         qualification = intent.getStringExtra("qualification");
         institution = intent.getStringExtra("institute");
-        Toast.makeText(this, uid+"   "+name+"  "+qualification+"  "+institution, Toast.LENGTH_SHORT).show();
-
-
-
     }
 }
