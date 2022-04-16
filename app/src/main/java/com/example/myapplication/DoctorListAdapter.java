@@ -74,12 +74,14 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
             String institute = list.get(position).getInstitute();
             String qualification = list.get(position).getEducationalQualification();
             String uid = list.get(position).getUid();
+            String visitDate = list.get(position).getVisitDate();
 
             Intent intent = new Intent(context,DoctorDescription.class);
             intent.putExtra("uid",uid);
             intent.putExtra("name",name);
             intent.putExtra("institute",institute);
             intent.putExtra("qualification",qualification);
+            intent.putExtra("visitDate",visitDate);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
 

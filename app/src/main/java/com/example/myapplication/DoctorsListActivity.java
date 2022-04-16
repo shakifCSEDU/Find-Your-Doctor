@@ -62,7 +62,7 @@ public class DoctorsListActivity extends AppCompatActivity {
         doctorType = intent.getStringExtra("doctorType");
         location = intent.getStringExtra("location");
         visitDate = intent.getStringExtra("date");
-         db = FirebaseDatabase.getInstance();
+        db = FirebaseDatabase.getInstance();
         root = db.getReference("DoctorType").child(doctorType).child(location);
 
         list = new ArrayList<CustomRowItem>();
@@ -84,20 +84,17 @@ public class DoctorsListActivity extends AppCompatActivity {
 
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         userID = dataSnapshot.child("uid").getValue(String.class);
-
                         db.getReference("Users").child(userID).addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                                   if(snapshot.exists()){
                                       DoctorUser doctor_user = snapshot.getValue(DoctorUser.class);
 
                                       fName =  doctor_user.getFirstName();
                                       lName =   doctor_user.getLastName();
-
                                       institute = doctor_user.getInstitute();
                                       qualification = doctor_user.getEducationalQualification();
-                                      list.add(new CustomRowItem((fName+" "+lName),institute,qualification,userID));
+                                      list.add(new CustomRowItem((fName+" "+lName),institute,qualification,userID,visitDate));
                                   }
                               adapter.notifyDataSetChanged();
                             }
@@ -108,13 +105,7 @@ public class DoctorsListActivity extends AppCompatActivity {
                             }
                         });
 
-
-
-
-
                     }
-
-
                 }
             }
 
@@ -125,7 +116,6 @@ public class DoctorsListActivity extends AppCompatActivity {
         });
 
         for(CustomRowItem user : list){
-
             Toast.makeText(getApplicationContext(),user.getName()+" "+user.getEducationalQualification(),Toast.LENGTH_LONG).show();
         }
 

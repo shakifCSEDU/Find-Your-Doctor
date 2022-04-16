@@ -1,14 +1,26 @@
 package com.example.myapplication;
 
 public class CustomRowItem {
-     private String Name,institute,educationalQualification,uid;
+     private String Name,institute,educationalQualification,uid,visitDate;
 
 
-     public CustomRowItem(String Name, String institute, String educationalQualification,String uid) {
+     public CustomRowItem(String Name, String institute, String educationalQualification,String uid, String visitDate) {
         this.Name = Name;
         this.institute = institute;
         this.educationalQualification = educationalQualification;
         this.uid = uid;
+        this.visitDate = visitDate;
+    }
+
+    public CustomRowItem() {
+    }
+
+    public String getVisitDate() {
+        return visitDate;
+    }
+
+    public void setVisitDate(String visitDate) {
+        this.visitDate = visitDate;
     }
 
     public String getUid() {
