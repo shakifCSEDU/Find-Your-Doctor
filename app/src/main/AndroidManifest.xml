@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.myapplication">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -16,6 +16,12 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+            android:name=".confirmationActitivity"
+            android:exported="false" />
+        <activity
+            android:name=".CanPayActivity"
+            android:exported="false" />
+        <activity
             android:name=".patientRegistrationAcitivity"
             android:exported="false" />
         <activity
@@ -24,11 +30,12 @@
         <activity
             android:name=".registrationDeciderActivity"
             android:exported="false" />
-        <activity android:name=".DoctorsListActivity"
-            android:exported="false"/>
-        <activity android:name=".DoctorDescription"
-            android:exported="false"/>
-
+        <activity
+            android:name=".DoctorsListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorDescription"
+            android:exported="false" />
         <activity
             android:name=".loginActivity"
             android:exported="true">
@@ -38,20 +45,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DoctorsListActivity"
-            android:exported="false"
-            />
+        <activity
+            android:name=".DoctorsListActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true" />
-
-        <activity android:name=".PatientProfileUpdateActivity"
-             android:exported="false"
-        />
-
-        <activity android:name=".DoctorProfileUpdateActivity"
-            android:exported="false"/>
-
+        <activity
+            android:name=".PatientProfileUpdateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DoctorProfileUpdateActivity"
+            android:exported="false" />
 
         <meta-data
             android:name="preloaded_fonts"

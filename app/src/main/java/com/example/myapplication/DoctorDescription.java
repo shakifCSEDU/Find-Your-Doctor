@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DoctorDescription extends AppCompatActivity {
+public class DoctorDescription extends AppCompatActivity implements View.OnClickListener {
 
 
     private GridView gridView;
@@ -37,9 +38,12 @@ public class DoctorDescription extends AppCompatActivity {
 
    private String name,qualification,uid,institution,visitDate;
    private TextView doctorNameTextView, chamberTextView, instituteTextView, qualificationTextView, mobileNumberTextView;
+   private Button proceedButton;
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor_description);
 
@@ -131,7 +135,7 @@ public class DoctorDescription extends AppCompatActivity {
 //            }
 //        });
 
-
+         proceedButton.setOnClickListener(this);
 
 
 
@@ -145,6 +149,9 @@ public class DoctorDescription extends AppCompatActivity {
         instituteTextView = findViewById(R.id.instituteDescription);
         qualificationTextView = findViewById(R.id.qualificationDescription);
         mobileNumberTextView = findViewById(R.id.mobileNumberDescription);
+        proceedButton = (Button)findViewById(R.id.proceedButtonId);
+
+
     }
 
     private void getIntentData() {
@@ -154,5 +161,22 @@ public class DoctorDescription extends AppCompatActivity {
         name = intent.getStringExtra("name");
         qualification = intent.getStringExtra("qualification");
         institution = intent.getStringExtra("institute");
+    }
+
+    @Override
+    public void onClick(View view) {
+
+
+        if(view == proceedButton){
+           Intent intent = new Intent(getApplicationContext(),CanPayActivity.class);
+           startActivity(intent);
+
+        }
+
+
+
+
+
+
     }
 }
