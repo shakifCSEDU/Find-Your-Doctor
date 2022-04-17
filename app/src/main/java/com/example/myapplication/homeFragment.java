@@ -149,14 +149,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             });
 
 
-
-
-           // list1 hoise doctor jkhn next appointment khujte jabe tkhn tar value gula jst list2 te add kre dbo...
-
-            // added all data in the arralist.
-
-
-
         }
 
 

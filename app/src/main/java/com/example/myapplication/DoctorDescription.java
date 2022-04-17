@@ -95,30 +95,18 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-
-
                     for(int index = 1; index <= 15; index++){
-
                         String a = snapshot.child("S"+index).getValue(String.class);
-
                         String index1 = Integer.toString(index);
-
-
                         if(a.equals("1") || a.equals("2")){
-                            customGrids.add(new CustomGrid(R.drawable.slot_background_green,"S"+index1));
+                            customGrids.add(new CustomGrid(R.drawable.slot_background_red,"S"+index1));
                             seatSlot.put("S"+index,"100");
-
-
                         }
                         else{
                             customGrids.add(new CustomGrid(R.drawable.slot_background_white,"S"+index1));
                             seatSlot.put("S"+index, a);
                         }
-
-
                     }
-                    descriptionAdapter.notifyDataSetChanged();
-
                 }
                 else{
                     int index;
@@ -127,8 +115,8 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
                         seatSlot.put("S"+index, "0");
                     }
 
-                    descriptionAdapter.notifyDataSetChanged();
                 }
+                descriptionAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -143,17 +131,12 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 count++;
                 String slot = "S" + Integer.toString(position + 1);
-
-
                 if(seatSlot.get(slot).equals("100")){
                     Toast.makeText(DoctorDescription.this, "This slot is already booked! Please choose another one!!", Toast.LENGTH_SHORT).show();
-
-
                 }
 
                 // if(seatMap.get(seat).equals("0")) {
                 if (isSelectSlot[position] == 0) {
-
                     if(seatSlot.get(slot).equals("0")){
                         view.setBackgroundColor(Color.parseColor("#00FF00"));
                         Toast.makeText(getApplicationContext(), "You Selected Slot Number :" + (position + 1), Toast.LENGTH_SHORT).show();
@@ -161,9 +144,8 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
                         seatSlot.put(slot,"1");
                     }
 
-
                 } else if(isSelectSlot[position] == 1){
-                    view.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                    view.setBackgroundColor(Color.parseColor("#DDDDDD"));
                     Toast.makeText(getApplicationContext(), "You Unselected Seat Number :" + (position + 1), Toast.LENGTH_SHORT).show();
                     isSelectSlot[position] = 0;
                     seatSlot.put(slot,"0");

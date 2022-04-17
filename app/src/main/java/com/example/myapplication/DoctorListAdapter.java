@@ -90,8 +90,8 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
             intent.putExtra("institute",institute);
             intent.putExtra("qualification",qualification);
             intent.putExtra("visitDate",visitDate);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            //context.startActivity(intent);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
 
         }
     }

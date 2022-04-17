@@ -34,7 +34,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
         this.person = person;
         this.Rootuid = Rootuid;
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appoinments");
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appointments");
 
     }
 
