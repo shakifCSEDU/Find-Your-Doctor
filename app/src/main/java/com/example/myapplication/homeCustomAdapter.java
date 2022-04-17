@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -22,10 +24,18 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
     private Context context;
     private ArrayList<homeUserClass>list = null;
     private String person;
-    public homeCustomAdapter(Context context, ArrayList<homeUserClass> list,String person) {
+    private DatabaseReference databaseReference;
+    private String Rootuid;
+
+    public homeCustomAdapter(Context context, ArrayList<homeUserClass> list,String person,String Rootuid) {
+
         this.context = context;
         this.list = list;
         this.person = person;
+        this.Rootuid = Rootuid;
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appoinments");
+
     }
 
     @NonNull
@@ -103,7 +113,21 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
                 Toast.makeText(context, "Confirm button pressed ", Toast.LENGTH_SHORT).show();
             }
             else if(view == removeButton){
-                Toast.makeText(context, "remove button pressed..", Toast.LENGTH_SHORT).show();
+                // Here we delete the item on the recyclerView
+
+                int position = getAdapterPosition();
+                String visitId  = list.get(position).getVisitId();
+
+
+                if(person.equals("patient")){
+                    databaseReference.child(visitId).child("patientCancelState").setValue("yes");
+
+                }
+                else{
+                    databaseReference.child(visitId).child("doctorCancelState").setValue("yes");
+                }
+
+
             }
         }
     }

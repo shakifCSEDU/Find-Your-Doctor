@@ -30,7 +30,9 @@ public class AppointmentFinishActivity extends AppCompatActivity {
 
     private TextView doctorNameText, chamberTextView, visitDateTextView, appointmentIDTextView;
     private Button homeButton;
-    private String doctorUid, patientUid, visitDate,slots, issueDate, issueTime;
+    private String doctorUid, patientUid, visitDate,slots, issueDate, issueTime,key;
+
+
 
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase patientFirebaseDatabase, doctorFirebaseDatabase;
@@ -66,7 +68,7 @@ public class AppointmentFinishActivity extends AppCompatActivity {
         appointmentIDTextView = findViewById(R.id.appointmentID);
 
         databaseReferenceKeyGenerator  = FirebaseDatabase.getInstance().getReference("Users");
-        String key = databaseReferenceKeyGenerator.push().getKey();
+        key = databaseReferenceKeyGenerator.push().getKey();
 
         doctorDatabaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(doctorUid);
         doctorDatabaseReference.addValueEventListener(new ValueEventListener() {
@@ -84,6 +86,9 @@ public class AppointmentFinishActivity extends AppCompatActivity {
                     appointmentDetailsMap.put("doctorPhoneNumber",doctorPhoneNumber);
                     appointmentDetailsMap.put("doctorType",doctorType);
                     appointmentDetailsMap.put("chamber",chamber);
+                    appointmentDetailsMap.put("visitId",key);
+
+
                     patientDatabaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(patientUid);
                     patientDatabaseReference.addValueEventListener(new ValueEventListener() {
                         @Override

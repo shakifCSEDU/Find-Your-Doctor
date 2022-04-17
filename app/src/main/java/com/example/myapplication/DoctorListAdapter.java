@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,10 +71,17 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
         @Override
         public void onClick(View view) {
             int position = getAdapterPosition();
+
+
             String name = list.get(position).getName();
             String institute = list.get(position).getInstitute();
             String qualification = list.get(position).getEducationalQualification();
             String uid = list.get(position).getUid();
+
+            Toast.makeText(context, ""+uid, Toast.LENGTH_SHORT).show();
+
+
+
             String visitDate = list.get(position).getVisitDate();
 
             Intent intent = new Intent(context,DoctorDescription.class);
@@ -82,8 +90,8 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
             intent.putExtra("institute",institute);
             intent.putExtra("qualification",qualification);
             intent.putExtra("visitDate",visitDate);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //context.startActivity(intent);
 
         }
     }

@@ -98,9 +98,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewId);
 
 
-
-
-
         if(userType.equals("2")){ // This userType defines that this is doctor page.
             homePageButton.setText("Manage Slot");
 
@@ -109,7 +106,8 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
 
-            homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor"); // here we pass patient because we want to check who he is.
+
+            homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor",userID); // here we pass patient because we want to check who he is.
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
@@ -118,12 +116,23 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
-                        String patientName,visitDate,visitID,phoneNumber;
+
+                        String patientName,visitDate,visitId,phoneNumber,patientCancelState,patientConfirmState,patientUid;
+
                         for (DataSnapshot dataSnapshot :snapshot.getChildren()){
+
+                            patientUid = dataSnapshot.child("patientUid").getValue(String.class);
+                            patientCancelState = dataSnapshot.child("patientCancelState").getValue(String.class);
+                            patientConfirmState = dataSnapshot.child("patientConfirmState").getValue(String.class);
+                            visitId = dataSnapshot.child("visitId").getValue(String.class);
+
                             patientName = dataSnapshot.child("patientName").getValue(String.class);
                             visitDate = dataSnapshot.child("visitDate").getValue(String.class);
                             phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
-                            list2.add(new homeUserClass(patientName,visitDate,"visitID",phoneNumber,R.drawable.profile_picture));
+
+
+
+                            list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid));
                         }
                         adapter.notifyDataSetChanged();
 
@@ -155,9 +164,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
 
 
-
-
-
         else if(userType.equals("1")){ ///  This condition is entered for the patient .
             homePageButton.setText("Search Doctor");
 
@@ -169,7 +175,9 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
 
-            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient");
+
+
+            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient",userID);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
@@ -179,15 +187,22 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if(snapshot.exists()){
-                        String doctorName, visitDate, visitID, phoneNumber, chamber, doctorType;
+                        String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType,doctorConfirmState,doctorCancelState,doctorUid;
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+
+                            doctorCancelState = dataSnapshot.child("doctorCancelState").getValue(String.class);
+                            doctorConfirmState = dataSnapshot.child("doctorConfirmState").getValue(String.class);
+
+                            doctorUid = dataSnapshot.child("doctorUid").getValue(String.class);
+                            visitId  = dataSnapshot.child("visitId").getValue(String.class);
                             doctorName = dataSnapshot.child("doctorName").getValue(String.class);
                             visitDate = dataSnapshot.child("visitDate").getValue(String.class);
                             //visitID = dataSnapshot.child("visitID").getValue(String.class);
                             phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
                             chamber = dataSnapshot.child("chamber").getValue(String.class);
                             doctorType = dataSnapshot.child("doctorType").getValue(String.class);
-                            list1.add(new homeUserClass(doctorName, visitDate,"visitId",phoneNumber,doctorType , chamber,R.id.profileImageId));
+                            list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid));
+
                         }
 
                         adapter.notifyDataSetChanged();

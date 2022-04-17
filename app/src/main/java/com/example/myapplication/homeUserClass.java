@@ -1,11 +1,34 @@
 package com.example.myapplication;
 
 public class homeUserClass {
-    private String name,visitDate,visitId,phoneNo,doctorType,chamber;
+    private String name,visitDate,visitId,phoneNo,doctorType,chamber,cancelState,confirmState,uid;
     private int imageId;
 
+    public String getCancelState() {
+        return cancelState;
+    }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, String doctorType, String chamber, int imageId) {
+    public void setCancelState(String cancelState) {
+        this.cancelState = cancelState;
+    }
+
+    public String getConfirmState() {
+        return confirmState;
+    }
+
+    public void setConfirmState(String confirmState) {
+        this.confirmState = confirmState;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, String doctorType, String chamber, int imageId, String cancelState, String confirmState, String uid) {
         this.name = name;
         this.visitDate = visitDate;
         this.visitId = visitId;
@@ -13,14 +36,20 @@ public class homeUserClass {
         this.doctorType = doctorType;
         this.chamber = chamber;
         this.imageId = imageId;
+        this.cancelState = cancelState;
+        this.confirmState =confirmState;
+        this.uid = uid;
     }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId) {
+    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId,String cancelState,String confirmState,String uid){
         this.name = name;
         this.visitDate = visitDate;
         this.visitId = visitId;
         this.phoneNo = phoneNo;
         this.imageId = imageId;
+        this.cancelState = cancelState;
+        this.confirmState =confirmState;
+        this.uid = uid;
     }
 
     public String getName() {
