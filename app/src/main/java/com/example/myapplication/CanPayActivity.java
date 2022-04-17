@@ -207,10 +207,7 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("patientUid",patientUid);
                 intent.putExtra("slots",slots);
                 intent.putExtra("visitDate",visitDate);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
 
             }else{
                 Toast.makeText(this, "Please give your payment contact number", Toast.LENGTH_SHORT).show();
