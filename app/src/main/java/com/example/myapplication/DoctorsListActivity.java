@@ -34,13 +34,10 @@ public class DoctorsListActivity extends AppCompatActivity {
     private ArrayList<String>userIDList = new ArrayList<String>();
 
 
-
     List<DoctorUser>doctorUserList  = new ArrayList<DoctorUser>();
     ArrayList<CustomRowItem>list;
 
-    //ArrayList<HashMap<String,String>> doctorsList= new ArrayList<HashMap<String,String>>();
-
-    String fName,lName,institute,qualification;
+    String fName,lName,institute,qualification,uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +46,10 @@ public class DoctorsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_doctors_list);
 
         this.setTitle("Doctors List"); // Set the toolbar name
-
-
         shimmerFrameLayout = (ShimmerFrameLayout)findViewById(R.id.shimmerDoctorsId);
         shimmerFrameLayout.startShimmer();
 
-
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerViewId);
-
-
+        recyclerView = findViewById(R.id.recyclerViewId);
 
         String[] doctors =  getResources().getStringArray(R.array.doctors_name);
         String[] type = getResources().getStringArray(R.array.Doctor_Speciality);
@@ -68,28 +60,22 @@ public class DoctorsListActivity extends AppCompatActivity {
         visitDate = intent.getStringExtra("date");
 
 
-
-
         db = FirebaseDatabase.getInstance();
         root = db.getReference("DoctorType").child(doctorType).child(location);
 
         list = new ArrayList<CustomRowItem>();
 
-        DoctorListAdapter adapter = new DoctorListAdapter(getApplicationContext(),list);
+        DoctorListAdapter adapter = new DoctorListAdapter(this,list);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-
-
 
         root.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-
                 if(snapshot.exists()){
-
                     for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                         userID = dataSnapshot.child("uid").getValue(String.class);
                         db.getReference("Users").child(userID).addValueEventListener(new ValueEventListener() {
@@ -97,12 +83,12 @@ public class DoctorsListActivity extends AppCompatActivity {
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                   if(snapshot.exists()){
                                       DoctorUser doctor_user = snapshot.getValue(DoctorUser.class);
-
+                                      uid = doctor_user.getUid();
                                       fName =  doctor_user.getFirstName();
                                       lName =   doctor_user.getLastName();
                                       institute = doctor_user.getInstitute();
                                       qualification = doctor_user.getEducationalQualification();
-                                      list.add(new CustomRowItem((fName+" "+lName),institute,qualification,userID,visitDate));
+                                      list.add(new CustomRowItem((fName+" "+lName),institute,qualification,uid,visitDate));
                                   }
                               adapter.notifyDataSetChanged();
                             }
@@ -122,22 +108,6 @@ public class DoctorsListActivity extends AppCompatActivity {
 
             }
         });
-
-        for(CustomRowItem user : list){
-            Toast.makeText(getApplicationContext(),user.getName()+" "+user.getEducationalQualification(),Toast.LENGTH_LONG).show();
-        }
-
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

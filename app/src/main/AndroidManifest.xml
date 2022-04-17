@@ -33,6 +33,8 @@
         <activity
             android:name=".doctorRegistrationActivity"
             android:exported="false" />
+        <activity android:name=".AppointmentFinishActivity"
+            android:exported="false"/>
         <activity
             android:name=".registrationDeciderActivity"
             android:exported="false" />

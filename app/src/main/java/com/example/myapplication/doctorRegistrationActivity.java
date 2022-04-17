@@ -180,8 +180,10 @@ public class doctorRegistrationActivity extends AppCompatActivity {
                                 }
                             });
 
-                            DoctorUser doctorUser = new DoctorUser(firstName,lastName, email, password, mobileNumber, region, institute, chamber,educationalQualification,speciality,finalGender,"2");
                             userID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+                            DoctorUser doctorUser = new DoctorUser(firstName,lastName, email, password, mobileNumber, region, institute, chamber,educationalQualification,speciality,finalGender,"2",userID);
+
                             databaseReference = FirebaseDatabase.getInstance().getReference();
                             String key = databaseReference.push().getKey();
 

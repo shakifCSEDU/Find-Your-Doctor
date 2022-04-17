@@ -1,9 +1,9 @@
 package com.example.myapplication;
 
 public class DoctorUser {
-    private String Name,firstName, lastName, email, password, mobileNumber, region, institute, chamber, educationalQualification, speciality,gender, userType;
+    private String Name,firstName, lastName, email, password, mobileNumber, region, institute, chamber, educationalQualification, speciality,gender, userType, uid;
 
-    public DoctorUser(String firstName, String lastName, String email, String password, String mobileNumber, String region, String institute, String chamber, String educationalQualification, String speciality, String gender,String userType) {
+    public DoctorUser(String firstName, String lastName, String email, String password, String mobileNumber, String region, String institute, String chamber, String educationalQualification, String speciality, String gender,String userType, String uid) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -16,6 +16,15 @@ public class DoctorUser {
         this.speciality = speciality;
         this.gender = gender;
         this.userType = userType;
+        this.uid =uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

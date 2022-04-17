@@ -212,6 +212,7 @@
         <item>Dr Neimer junior</item>
         <item>Dr Asif Akbar</item>
     </string-array>
+    <string name="title_activity_appointment_finish">AppointmentFinishActivity</string>
 
 
 </resources>

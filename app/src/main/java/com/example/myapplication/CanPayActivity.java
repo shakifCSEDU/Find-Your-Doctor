@@ -91,7 +91,7 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
                 if(snapshot.exists()){
                     patientUser patient_User = snapshot.getValue(patientUser.class);
                     patientNameTextView.setText(patient_User.getFirstName() + " "+ patient_User.getLastName());
-                    doctorPhoneNumberTextView.setText(patient_User.getMobileNumber());
+                    patientPhoneNumberTextView.setText(patient_User.getMobileNumber());
                 }
             }
 
@@ -202,7 +202,11 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
                     }
                 });
 
-                Intent intent = new Intent(getApplicationContext(),confirmationActitivity.class);
+                Intent intent = new Intent(getApplicationContext(),AppointmentFinishActivity.class);
+                intent.putExtra("doctorUid",doctorUid);
+                intent.putExtra("patientUid",patientUid);
+                intent.putExtra("slots",slots);
+                intent.putExtra("visitDate",visitDate);
                 startActivity(intent);
 
             }else{

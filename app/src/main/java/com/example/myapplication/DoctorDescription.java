@@ -61,14 +61,14 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
 
         getIntentData();
         
-        Toast.makeText(DoctorDescription.this,"Date" + visitDate, Toast.LENGTH_LONG).show();
+        Toast.makeText(DoctorDescription.this,"Date " + uid, Toast.LENGTH_LONG).show();
 
 
         // Firebase database called ...
         db = FirebaseDatabase.getInstance();
         root = db.getReference("Users").child(uid);
         ArrayList<CustomGrid>customGrids = new ArrayList<CustomGrid>();
-        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(getApplicationContext() ,customGrids);
+        DoctorDescriptionAdapter descriptionAdapter = new DoctorDescriptionAdapter(DoctorDescription.this ,customGrids);
         gridView.setAdapter(descriptionAdapter);
 
 

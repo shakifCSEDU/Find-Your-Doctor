@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AppointmentFinishActivity"
+    android:background="#C9EFF4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DoctorName: "
+            android:layout_marginTop="40dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:layout_marginLeft="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Prodipta Sen"
+            android:id="@+id/doctorName"
+            android:layout_marginTop="40dp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Visit Date : "
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:layout_marginLeft="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date"
+            android:id="@+id/visitDateId"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chamber : "
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:layout_marginLeft="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chamber"
+            android:id="@+id/chamberId"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment ID : "
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:fontFamily="cursive"
+            android:layout_marginLeft="30dp"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="ticket_ID"
+            android:id="@+id/appointmentID"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/black"
+            android:autoSizeTextType="uniform"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/login"
+        android:layout_marginTop="20dp"
+        android:padding="10dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Successfully Booked! For Details, Please See Appointments"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:padding="10dp"
+        android:layout_marginTop="20sp"
+        android:textColor="#2465D6"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Home"
+        android:layout_gravity="center"
+        android:textAllCaps="false"
+        android:id="@+id/homeButtonId"
+        android:textSize="20sp"
+        android:fontFamily="monospace"
+        android:padding="5dp"
+        />
+
+
+</LinearLayout>
+
+
