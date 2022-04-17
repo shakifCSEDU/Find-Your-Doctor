@@ -23,6 +23,12 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -32,13 +38,17 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     private Button homePageButton;
     private NavController navController;
 
+    private FirebaseAuth firebaseAuth;
+    private FirebaseDatabase db;
+    private DatabaseReference root;
+
 
     private RecyclerView recyclerView;
     private View view;
     private Context context;
     Boolean isDoctor  = false;
 
-    private String userType;
+    private String userType, userID;
 
     ArrayList<homeUserClass>list1 = new ArrayList<homeUserClass>(); // Here list1 ---> patient see doctors appontment
 
@@ -90,21 +100,53 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
 
 
+
         if(userType.equals("2")){ // This userType defines that this is doctor page.
             homePageButton.setText("Manage Slot");
 
-
-           // list1 hoise doctor jkhn next appointment khujte jabe tkhn tar value gula jst list2 te add kre dbo...
-
-            // added all data in the arralist.
-            for(int i = 0 ;i< nameString.length  ; i++){
-                list2.add(new homeUserClass(nameString[i],"visitDate","visitID","010100101"));
-            }
+            firebaseAuth = FirebaseAuth.getInstance();
+            userID = firebaseAuth.getCurrentUser().getUid();
+            db = FirebaseDatabase.getInstance();
+            root = db.getReference("Users").child(userID).child("Appointments");
 
             homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor"); // here we pass patient because we want to check who he is.
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
+
+            root.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+                        String patientName,visitDate,visitID,phoneNumber;
+                        for (DataSnapshot dataSnapshot :snapshot.getChildren()){
+                            patientName = dataSnapshot.child("patientName").getValue(String.class);
+                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
+                            phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
+                            list2.add(new homeUserClass(patientName,visitDate,"visitID",phoneNumber,R.drawable.profile_picture));
+                        }
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    else {
+                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+
+
+           // list1 hoise doctor jkhn next appointment khujte jabe tkhn tar value gula jst list2 te add kre dbo...
+
+            // added all data in the arralist.
+
+
 
         }
 
@@ -119,15 +161,51 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         else if(userType.equals("1")){ ///  This condition is entered for the patient .
             homePageButton.setText("Search Doctor");
 
+            // here we pass patient because we want to check who he is.
+
             // added all data in the arralist.
-            for(int i = 0 ;i< nameString.length  ; i++){
-                list1.add(new homeUserClass(nameString[i],"visitDate","visitId","019101010","MBBS",locationString[i],R.id.profileImageId));
-            }
-                // initialise the recyclerView
-            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient"); // here we pass patient because we want to check who he is.
+            firebaseAuth = FirebaseAuth.getInstance();
+            userID = firebaseAuth.getCurrentUser().getUid();
+            db = FirebaseDatabase.getInstance();
+            root = db.getReference("Users").child(userID).child("Appointments");
+
+            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient");
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
+
+
+            root.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.exists()){
+                        String doctorName, visitDate, visitID, phoneNumber, chamber, doctorType;
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            doctorName = dataSnapshot.child("doctorName").getValue(String.class);
+                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
+                            //visitID = dataSnapshot.child("visitID").getValue(String.class);
+                            phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
+                            chamber = dataSnapshot.child("chamber").getValue(String.class);
+                            doctorType = dataSnapshot.child("doctorType").getValue(String.class);
+                            list1.add(new homeUserClass(doctorName, visitDate,"visitId",phoneNumber,doctorType , chamber,R.id.profileImageId));
+                        }
+
+                        adapter.notifyDataSetChanged();
+                    }
+                    else{
+                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+                // initialise the recyclerView
+
         }
 
 

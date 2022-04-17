@@ -15,11 +15,12 @@ public class homeUserClass {
         this.imageId = imageId;
     }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo) {
+    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId) {
         this.name = name;
         this.visitDate = visitDate;
         this.visitId = visitId;
         this.phoneNo = phoneNo;
+        this.imageId = imageId;
     }
 
     public String getName() {
