@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -55,8 +61,9 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
     }
 
     @Override
-    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+    public void onBindViewHolder(final myViewHolder holder,final int position) {
         if(TextUtils.equals(person,"patient")){
+
             holder.nameTextView.setText(list.get(position).getName());
             holder.visitDateTextView.setText(list.get(position).getVisitDate());
             holder.visitIdTextView.setText(list.get(position).getVisitId());
@@ -64,12 +71,15 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
             holder.doctorTypeTextView.setText(list.get(position).getDoctorType());
             holder.chamberTextView.setText(list.get(position).getChamber());
             Picasso.get().load(list.get(position).getImageId()).placeholder(R.drawable.profile_picture).into(holder.circleImageView);
+            holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getBackgroundColor()));
+
         }else{
             holder.nameTextView.setText(list.get(position).getName());
             holder.visitDateTextView.setText(list.get(position).getVisitDate());
             holder.visitIdTextView.setText(list.get(position).getVisitId());
             holder.phoneNoTextView.setText(list.get(position).getPhoneNo());
             Picasso.get().load(list.get(position).getImageId()).placeholder(R.drawable.profile_picture).into(holder.circleImageView);
+            holder.cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getBackgroundColor()));
         }
 
     }
@@ -84,7 +94,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
         private CircleImageView circleImageView;
        private TextView nameTextView,visitDateTextView,visitIdTextView,phoneNoTextView,doctorTypeTextView,chamberTextView;
        private Button confirmButton,removeButton;
-
+       private CardView cardView;
 
        public myViewHolder(@NonNull View itemView) {
            super(itemView);
@@ -98,10 +108,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
 
            confirmButton = (Button)itemView.findViewById(R.id.confirmButtonId);
            removeButton  = (Button)itemView.findViewById(R.id.removeButtonId);
-
-
-
-
+           cardView = (CardView) itemView.findViewById(R.id.cardViewId);
 
            confirmButton.setOnClickListener(this::onClick);
            removeButton.setOnClickListener(this::onClick);
@@ -112,25 +119,72 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
             if(view == confirmButton){
                 Toast.makeText(context, "Confirm button pressed ", Toast.LENGTH_SHORT).show();
             }
+
             else if(view == removeButton){
                 // Here we delete the item on the recyclerView
 
-                int position = getAdapterPosition();
-                String visitId  = list.get(position).getVisitId();
+                        int position = getAdapterPosition();
+                        String visitId  = list.get(position).getVisitId();
+
+                        if(person.equals("patient")){ // Patient click the remove button
+
+                            String doctorUid = list.get(position).getUid();
+
+                            DatabaseReference db =  FirebaseDatabase.getInstance().getReference("Users").child(doctorUid).child("Appointments");
 
 
-                if(person.equals("patient")){
-                    databaseReference.child(visitId).child("patientCancelState").setValue("yes");
+                            db.child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if(snapshot.exists()){
+                                        db.child(visitId).child("patientCancelState").setValue("yes");
+
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appointments")
+                                    .child(visitId).removeValue();
+
+                            list.remove(position);
+                            notifyItemRemoved(position);
+                        }
+
+                   else{
+
+                    String patientUid = list.get(position).getUid();
+
+                    DatabaseReference db =  FirebaseDatabase.getInstance().getReference("Users").child(patientUid).child("Appointments");
+
+
+
+                    db.child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.exists()){
+                                db.child(visitId).child("doctorCancelState").setValue("yes");
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+
+                    FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appointments")
+                          .child(visitId).removeValue();
+                    list.remove(position);
 
                 }
-                else{
-                    databaseReference.child(visitId).child("doctorCancelState").setValue("yes");
-                }
-
 
             }
         }
     }
-
 
 }

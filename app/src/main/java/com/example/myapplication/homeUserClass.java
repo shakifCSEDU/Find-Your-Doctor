@@ -1,8 +1,16 @@
 package com.example.myapplication;
 
 public class homeUserClass {
-    private String name,visitDate,visitId,phoneNo,doctorType,chamber,cancelState,confirmState,uid;
+    private String name,visitDate,visitId,phoneNo,doctorType,chamber,cancelState,confirmState,uid,backgroundColor;
     private int imageId;
+
+    public String getBackgroundColor() {
+        return backgroundColor;
+    }
+
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
 
     public String getCancelState() {
         return cancelState;
@@ -28,7 +36,7 @@ public class homeUserClass {
         this.uid = uid;
     }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, String doctorType, String chamber, int imageId, String cancelState, String confirmState, String uid) {
+    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, String doctorType, String chamber, int imageId, String cancelState, String confirmState, String uid,String backgroundColor) {
         this.name = name;
         this.visitDate = visitDate;
         this.visitId = visitId;
@@ -39,9 +47,10 @@ public class homeUserClass {
         this.cancelState = cancelState;
         this.confirmState =confirmState;
         this.uid = uid;
+        this.backgroundColor = backgroundColor;
     }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId,String cancelState,String confirmState,String uid){
+    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId,String cancelState,String confirmState,String uid,String backgroundColor){
         this.name = name;
         this.visitDate = visitDate;
         this.visitId = visitId;
@@ -50,6 +59,7 @@ public class homeUserClass {
         this.cancelState = cancelState;
         this.confirmState =confirmState;
         this.uid = uid;
+        this.backgroundColor =backgroundColor;
     }
 
     public String getName() {
