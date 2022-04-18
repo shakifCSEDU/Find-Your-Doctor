@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -20,17 +21,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class homeFragment extends Fragment implements View.OnClickListener {
@@ -45,6 +55,8 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private View view;
+    private ListView listView;
+
     private Context context;
     Boolean isDoctor  = false;
 
@@ -53,12 +65,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     ArrayList<homeUserClass>list1 = new ArrayList<homeUserClass>(); // Here list1 ---> patient see doctors appontment
 
     ArrayList<homeUserClass>list2 = new ArrayList<homeUserClass>(); // Here list1 ---> patient see doctors appontment
-
-
-
-    String[] nameString  , locationString;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,10 +76,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
         view = inflater.inflate(R.layout.fragment_home, container, false);
         context = view.getContext();
-
-        nameString = getResources().getStringArray(R.array.doctors_name);
-        locationString = getResources().getStringArray(R.array.Dhaka_region);
-
 
         shimmerCode();
 
@@ -96,6 +98,7 @@ public class homeFragment extends Fragment implements View.OnClickListener {
         navController = Navigation.findNavController(view);
         homePageButton = (Button)view.findViewById(R.id.homePageButtonId);
         recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewId);
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
         if(userType.equals("2")){ // This userType defines that this is doctor page.
@@ -103,131 +106,21 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
             firebaseAuth = FirebaseAuth.getInstance();
             userID = firebaseAuth.getCurrentUser().getUid();
+
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
 
-
-            homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor",userID); // here we pass patient because we want to check who he is.
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(adapter);
-
-            root.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    if (snapshot.exists()){
-
-                        String patientName,visitDate,visitId,phoneNumber,patientCancelState,patientConfirmState,patientUid;
-
-                        for (DataSnapshot dataSnapshot :snapshot.getChildren()){
-
-                            patientUid = dataSnapshot.child("patientUid").getValue(String.class);
-                            patientCancelState = dataSnapshot.child("patientCancelState").getValue(String.class);
-                            patientConfirmState = dataSnapshot.child("patientConfirmState").getValue(String.class);
-                            visitId = dataSnapshot.child("visitId").getValue(String.class);
-
-                            patientName = dataSnapshot.child("patientName").getValue(String.class);
-                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
-                            phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
-
-                            if(patientCancelState.equalsIgnoreCase("yes")){
-                                list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid,"#FF0000"));
-
-                            }else{
-
-                                list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid,"#FFFFFF"));
-                            }
-
-                        }
-                        adapter.notifyDataSetChanged();
-
-                    }
-                    else {
-                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
-                    }
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
         }
-
-
-
-
-
 
         else if(userType.equals("1")){ ///  This condition is entered for the patient .
             homePageButton.setText("Search Doctor");
 
-            // here we pass patient because we want to check who he is.
 
-            // added all data in the arralist.
             firebaseAuth = FirebaseAuth.getInstance();
             userID = firebaseAuth.getCurrentUser().getUid();
+
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
-
-
-
-            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient",userID);
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-            recyclerView.setLayoutManager(linearLayoutManager);
-            recyclerView.setAdapter(adapter);
-
-
-            root.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list1.clear();
-
-                    if(snapshot.exists()){
-                        String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType,doctorConfirmState,doctorCancelState,doctorUid;
-                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-                            doctorCancelState = dataSnapshot.child("doctorCancelState").getValue(String.class);
-                            doctorConfirmState = dataSnapshot.child("doctorConfirmState").getValue(String.class);
-
-                            doctorUid = dataSnapshot.child("doctorUid").getValue(String.class);
-                            visitId  = dataSnapshot.child("visitId").getValue(String.class);
-                            doctorName = dataSnapshot.child("doctorName").getValue(String.class);
-                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
-                            //visitID = dataSnapshot.child("visitID").getValue(String.class);
-                            phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
-                            chamber = dataSnapshot.child("chamber").getValue(String.class);
-                            doctorType = dataSnapshot.child("doctorType").getValue(String.class);
-
-
-                            if(doctorCancelState.equalsIgnoreCase("yes")){
-
-                                list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid,"#FF0000"));
-
-                            }else{
-                                list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid,"#FFFFFF"));
-
-                            }
-                        }
-
-                        adapter.notifyDataSetChanged();
-                    }
-                    else{
-                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-                // initialise the recyclerView
-
         }
 
 
@@ -235,11 +128,246 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        FirebaseRecyclerOptions options =
+                new FirebaseRecyclerOptions.Builder<homeUserClass>()
+                        .setQuery(root,homeUserClass.class).build();
+
+
+        if(userType.equals("1")){
+
+            FirebaseRecyclerAdapter<homeUserClass,myViewHolder>adapter =
+                    new FirebaseRecyclerAdapter<homeUserClass, myViewHolder>(options) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull homeUserClass model) {
+
+                            String visitId = getRef(position).getKey();
+
+                            root.child(visitId).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if (snapshot.exists()){
+
+                                    String doctorName, visitDate, visitId, phoneNo, doctorType, chamber;
+                                    String doctorUid;
+
+                                    doctorName = snapshot.child("doctorName").getValue().toString();
+                                    visitDate = snapshot.child("visitDate").getValue().toString();
+                                    visitId = snapshot.child("visitId").getValue().toString();
+                                    phoneNo = snapshot.child("doctorPhoneNumber").getValue().toString();
+                                    doctorType = snapshot.child("doctorType").getValue().toString();
+                                    chamber = snapshot.child("chamber").getValue().toString();
+                                    doctorUid = snapshot.child("doctorUid").getValue().toString();
+
+
+                                    holder.nameTextView.setText(doctorName);
+                                    holder.visitDateTextView.setText(visitDate);
+                                    holder.visitIdTextView.setText(visitId);
+                                    holder.phoneNoTextView.setText(phoneNo);
+                                    holder.doctorTypeTextView.setText(doctorType);
+                                    holder.chamberTextView.setText(chamber);
+                                    Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
+
+                                    holder.removeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            db.getReference("Users").child(doctorUid).child("Appointments")
+                                                    .child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                db.getReference("Users").child(doctorUid).child("Appointments")
+                                                                        .child(visitId).child("patientCancelState").setValue("yes")
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                Toast.makeText(context, "PatientCancel State yes", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                            db.getReference("Users").child(userID).child("Appointments")
+                                                    .child(visitId).removeValue();
+
+
+                                        }
+                                    });
+                                }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+
+                        @NonNull
+                        @Override
+                        public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_patient_layout,parent,false);
+                            myViewHolder holder = new myViewHolder(view,"patient");
+                            return holder;
+                        }
+                    };
+            recyclerView.setAdapter(adapter);
+            adapter.startListening();
+        }
+        else{
+            FirebaseRecyclerAdapter<homeUserClass,myViewHolder>adapter =
+                    new FirebaseRecyclerAdapter<homeUserClass, myViewHolder>(options) {
+                        @Override
+                        protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull homeUserClass model) {
+
+                            String visitId = getRef(position).getKey();
+
+                            root.child(visitId).addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    if (snapshot.exists()){
+
+                                        String patientName, visitDate, visitId, phoneNumber, patientCancelState, patientConfirmState, patientUid;
+
+                                    patientUid = snapshot.child("patientUid").getValue(String.class);
+                                    patientCancelState = snapshot.child("patientCancelState").getValue(String.class);
+                                    patientConfirmState = snapshot.child("patientConfirmState").getValue(String.class);
+                                    visitId = snapshot.child("visitId").getValue(String.class);
+
+                                    patientName = snapshot.child("patientName").getValue(String.class);
+                                    visitDate = snapshot.child("visitDate").getValue(String.class);
+                                    phoneNumber = snapshot.child("patientPhoneNumber").getValue(String.class);
+
+                                    holder.nameTextView.setText(patientName);
+                                    holder.visitIdTextView.setText(visitId);
+                                    holder.visitDateTextView.setText(visitDate);
+                                    holder.phoneNoTextView.setText(phoneNumber);
+                                    Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
+
+
+                                    holder.removeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+                                            db.getReference("Users").child(patientUid).child("Appointments")
+                                                    .child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                                        @Override
+                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                                            if (snapshot.exists()) {
+                                                                db.getReference("Users").child(patientUid).child("Appointments")
+                                                                        .child(visitId).child("doctorCancelState").setValue("yes")
+                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                                            @Override
+                                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                                Toast.makeText(context, "DoctorCancel State yes", Toast.LENGTH_SHORT).show();
+                                                                            }
+                                                                        });
+                                                            }
+                                                        }
+
+                                                        @Override
+                                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                                        }
+                                                    });
+                                            db.getReference("Users").child(userID).child("Appointments")
+                                                    .child(visitId).removeValue();
+
+
+                                        }
+                                    });
+
+                                }
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                        }
+
+                        @NonNull
+                        @Override
+                        public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_doctor_layout,parent,false);
+                            myViewHolder holder = new myViewHolder(view,"doctor");
+                            return holder;
+                        }
+                    };
+            recyclerView.setAdapter(adapter);
+            adapter.startListening();
+        }
+
+
+
+
+
+
+    }
+
+    @Override
     public void onDestroyView() {
-        list1.clear();
-        list2.clear();
+        //list1.clear();
+        //list2.clear();
+
         super.onDestroyView();
     }
+
+
+
+
+
+    public static class myViewHolder extends RecyclerView.ViewHolder{
+        CircleImageView circleImageView;
+        TextView nameTextView,visitDateTextView,visitIdTextView,phoneNoTextView,doctorTypeTextView,chamberTextView;
+        Button confirmButton,removeButton;
+        CardView cardView;
+
+        public myViewHolder(@NonNull View view,String person) {
+            super(view);
+            if(person.equals("patient")){
+                circleImageView = (CircleImageView)view.findViewById(R.id.circleImageViewId);
+                nameTextView = (TextView)view.findViewById(R.id.userNameTextViewId);
+                visitDateTextView = (TextView)view.findViewById(R.id.visitDateTextViewId);
+                visitIdTextView = (TextView)view.findViewById(R.id.visitIdTextViiewId);
+                phoneNoTextView = (TextView)view.findViewById(R.id.phoneNoTextViewId);
+                doctorTypeTextView = (TextView)view.findViewById(R.id.doctorTypeTextViewId);
+                chamberTextView = (TextView)view.findViewById(R.id.chamberTextViewId);
+
+                confirmButton = (Button)view.findViewById(R.id.confirmButtonId);
+                removeButton  = (Button)view.findViewById(R.id.removeButtonId);
+                cardView = (CardView)view.findViewById(R.id.cardViewId);
+            }else{
+                circleImageView = view.findViewById(R.id.circleImageViewId);
+                nameTextView = view.findViewById(R.id.userNameTextViewId);
+                visitDateTextView = view.findViewById(R.id.visitDateTextViewId);
+                visitIdTextView = view.findViewById(R.id.visitIdTextViiewId);
+                phoneNoTextView = view.findViewById(R.id.phoneNoTextViewId);
+                confirmButton = view.findViewById(R.id.confirmButtonId);
+                removeButton = view.findViewById(R.id.removeButtonId);
+                cardView = view.findViewById(R.id.cardViewId);
+            }
+
+
+
+        }
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -251,4 +379,5 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
+
 }

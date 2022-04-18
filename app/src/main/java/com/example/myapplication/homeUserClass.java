@@ -1,8 +1,49 @@
 package com.example.myapplication;
 
 public class homeUserClass {
-    private String name,visitDate,visitId,phoneNo,doctorType,chamber,cancelState,confirmState,uid,backgroundColor;
-    private int imageId;
+     private int imageId;
+     private String backgroundColor;
+
+    private String  chamber,doctorCancelState,
+            doctorConfirmState,doctorName,doctorPhoneNumber,doctorType,doctorUid,
+    issueDate,issueTime , patientCancelState , patientConfirmState,patientName,
+            patientPhoneNumber , patientReview,patientUid,visitDate,visitId;
+
+
+    public homeUserClass() {
+
+    }
+
+    public homeUserClass(int imageId, String backgroundColor, String chamber, String doctorCancelState, String doctorConfirmState, String doctorName, String doctorPhoneNumber, String doctorType, String doctorUid, String issueDate, String issueTime, String patientCancelState, String patientConfirmState, String patientName, String patientPhoneNumber, String patientReview, String patientUid, String visitDate, String visitId) {
+        this.imageId = imageId;
+        this.backgroundColor = backgroundColor;
+        this.chamber = chamber;
+        this.doctorCancelState = doctorCancelState;
+        this.doctorConfirmState = doctorConfirmState;
+        this.doctorName = doctorName;
+        this.doctorPhoneNumber = doctorPhoneNumber;
+        this.doctorType = doctorType;
+        this.doctorUid = doctorUid;
+        this.issueDate = issueDate;
+        this.issueTime = issueTime;
+        this.patientCancelState = patientCancelState;
+        this.patientConfirmState = patientConfirmState;
+        this.patientName = patientName;
+        this.patientPhoneNumber = patientPhoneNumber;
+        this.patientReview = patientReview;
+        this.patientUid = patientUid;
+        this.visitDate = visitDate;
+        this.visitId = visitId;
+    }
+
+
+    public int getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(int imageId) {
+        this.imageId = imageId;
+    }
 
     public String getBackgroundColor() {
         return backgroundColor;
@@ -12,62 +53,124 @@ public class homeUserClass {
         this.backgroundColor = backgroundColor;
     }
 
-    public String getCancelState() {
-        return cancelState;
+    public String getChamber() {
+        return chamber;
     }
 
-    public void setCancelState(String cancelState) {
-        this.cancelState = cancelState;
-    }
-
-    public String getConfirmState() {
-        return confirmState;
-    }
-
-    public void setConfirmState(String confirmState) {
-        this.confirmState = confirmState;
-    }
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, String doctorType, String chamber, int imageId, String cancelState, String confirmState, String uid,String backgroundColor) {
-        this.name = name;
-        this.visitDate = visitDate;
-        this.visitId = visitId;
-        this.phoneNo = phoneNo;
-        this.doctorType = doctorType;
+    public void setChamber(String chamber) {
         this.chamber = chamber;
-        this.imageId = imageId;
-        this.cancelState = cancelState;
-        this.confirmState =confirmState;
-        this.uid = uid;
-        this.backgroundColor = backgroundColor;
     }
 
-    public homeUserClass(String name, String visitDate, String visitId, String phoneNo, int imageId,String cancelState,String confirmState,String uid,String backgroundColor){
-        this.name = name;
-        this.visitDate = visitDate;
-        this.visitId = visitId;
-        this.phoneNo = phoneNo;
-        this.imageId = imageId;
-        this.cancelState = cancelState;
-        this.confirmState =confirmState;
-        this.uid = uid;
-        this.backgroundColor =backgroundColor;
+    public String getDoctorCancelState() {
+        return doctorCancelState;
     }
 
-    public String getName() {
-        return name;
+    public void setDoctorCancelState(String doctorCancelState) {
+        this.doctorCancelState = doctorCancelState;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDoctorConfirmState() {
+        return doctorConfirmState;
+    }
+
+    public void setDoctorConfirmState(String doctorConfirmState) {
+        this.doctorConfirmState = doctorConfirmState;
+    }
+
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(String doctorName) {
+        this.doctorName = doctorName;
+    }
+
+    public String getDoctorPhoneNumber() {
+        return doctorPhoneNumber;
+    }
+
+    public void setDoctorPhoneNumber(String doctorPhoneNumber) {
+        this.doctorPhoneNumber = doctorPhoneNumber;
+    }
+
+    public String getDoctorType() {
+        return doctorType;
+    }
+
+    public void setDoctorType(String doctorType) {
+        this.doctorType = doctorType;
+    }
+
+    public String getDoctorUid() {
+        return doctorUid;
+    }
+
+    public void setDoctorUid(String doctorUid) {
+        this.doctorUid = doctorUid;
+    }
+
+    public String getIssueDate() {
+        return issueDate;
+    }
+
+    public void setIssueDate(String issueDate) {
+        this.issueDate = issueDate;
+    }
+
+    public String getIssueTime() {
+        return issueTime;
+    }
+
+    public void setIssueTime(String issueTime) {
+        this.issueTime = issueTime;
+    }
+
+    public String getPatientCancelState() {
+        return patientCancelState;
+    }
+
+    public void setPatientCancelState(String patientCancelState) {
+        this.patientCancelState = patientCancelState;
+    }
+
+    public String getPatientConfirmState() {
+        return patientConfirmState;
+    }
+
+    public void setPatientConfirmState(String patientConfirmState) {
+        this.patientConfirmState = patientConfirmState;
+    }
+
+    public String getPatientName() {
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
+    }
+
+    public String getPatientPhoneNumber() {
+        return patientPhoneNumber;
+    }
+
+    public void setPatientPhoneNumber(String patientPhoneNumber) {
+        this.patientPhoneNumber = patientPhoneNumber;
+    }
+
+    public String getPatientReview() {
+        return patientReview;
+    }
+
+    public void setPatientReview(String patientReview) {
+        this.patientReview = patientReview;
+    }
+
+    public String getPatientUid() {
+        return patientUid;
+    }
+
+    public void setPatientUid(String patientUid) {
+        this.patientUid = patientUid;
     }
 
     public String getVisitDate() {
@@ -84,37 +187,5 @@ public class homeUserClass {
 
     public void setVisitId(String visitId) {
         this.visitId = visitId;
-    }
-
-    public String getPhoneNo() {
-        return phoneNo;
-    }
-
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
-
-    public String getDoctorType() {
-        return doctorType;
-    }
-
-    public void setDoctorType(String doctorType) {
-        this.doctorType = doctorType;
-    }
-
-    public String getChamber() {
-        return chamber;
-    }
-
-    public void setChamber(String chamber) {
-        this.chamber = chamber;
-    }
-
-    public int getImageId() {
-        return imageId;
-    }
-
-    public void setImageId(int imageId) {
-        this.imageId = imageId;
     }
 }
