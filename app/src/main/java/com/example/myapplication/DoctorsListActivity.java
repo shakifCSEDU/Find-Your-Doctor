@@ -115,5 +115,4 @@ public class DoctorsListActivity extends AppCompatActivity {
 
 class DoctorListDescription{
     String firstName, lastName, institute, educationalQualification, profileImage;
-
 }

@@ -54,7 +54,7 @@ public class AppointmentFinishActivity extends AppCompatActivity {
         visitDate = intent.getStringExtra("visitDate");
         slots = intent.getStringExtra("slots");
 
-        Toast.makeText(AppointmentFinishActivity.this,"Doctor UID "+ doctorUid,Toast.LENGTH_LONG).show();
+        Toast.makeText(AppointmentFinishActivity.this,"Doctor UID "+doctorUid,Toast.LENGTH_LONG).show();
 
         calendar = Calendar.getInstance();
         SimpleDateFormat currentDateFormat = new SimpleDateFormat("dd - M - yyyy");
@@ -82,6 +82,7 @@ public class AppointmentFinishActivity extends AppCompatActivity {
                     doctorPhoneNumber = doctorUser.getMobileNumber();
                     doctorType = doctorUser.getSpeciality();
                     chamber = doctorUser.getChamber();
+
                     appointmentDetailsMap.put("doctorName",doctorName);
                     appointmentDetailsMap.put("doctorPhoneNumber",doctorPhoneNumber);
                     appointmentDetailsMap.put("doctorType",doctorType);
@@ -146,10 +147,24 @@ public class AppointmentFinishActivity extends AppCompatActivity {
                         }
                     });
 
-
-
-
                 }
+            }
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        patientDatabaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(patientUid);
+        patientDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                patientUser patient_user = snapshot.getValue(patientUser.class);
+                patientName = patient_user.getFirstName()+" "+patient_user.getLastName();
+                patientPhoneNumber = patient_user.getMobileNumber();
+
             }
 
             @Override
@@ -158,8 +173,58 @@ public class AppointmentFinishActivity extends AppCompatActivity {
             }
         });
 
+
         visitDateTextView.setText(visitDate);
         appointmentIDTextView.setText(key);
+
+        Toast.makeText(AppointmentFinishActivity.this,"doctor name is" + patientName, Toast.LENGTH_LONG).show();
+
+        appointmentDetailsMap.put("doctorName",doctorName);
+        appointmentDetailsMap.put("doctorPhoneNumber",doctorPhoneNumber);
+        appointmentDetailsMap.put("doctorType",doctorType);
+        appointmentDetailsMap.put("chamber",chamber);
+        appointmentDetailsMap.put("patientName",patientName);
+        appointmentDetailsMap.put("patientPhoneNumber",patientPhoneNumber);
+
+        appointmentDetailsMap.put("doctorUid",doctorUid);
+        appointmentDetailsMap.put("patientUid",patientUid);
+        appointmentDetailsMap.put("visitDate",visitDate);
+        appointmentDetailsMap.put("slots",slots);
+        appointmentDetailsMap.put("doctorCancelState","No");
+        appointmentDetailsMap.put("patientCancelState","No");
+        appointmentDetailsMap.put("doctorConfirmSate","No");
+        appointmentDetailsMap.put("patientConfirmState","No");
+        appointmentDetailsMap.put("patientReview","No");
+        appointmentDetailsMap.put("issueDate",issueDate);
+        appointmentDetailsMap.put("issueTime",issueTime);
+
+
+        patientDatabaseReference.child("Appointments").child(key).setValue(appointmentDetailsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                //Toast.makeText(AppointmentFinishActivity.this, "Patient Database is created", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                //Toast.makeText(AppointmentFinishActivity.this, "Patient Database is not created", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        doctorDatabaseReference.child("Appointments").child(key).setValue(appointmentDetailsMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                Toast.makeText(AppointmentFinishActivity.this, "Doctor Database is created", Toast.LENGTH_SHORT).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(AppointmentFinishActivity.this, "Doctor Database is not created", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        Toast.makeText(AppointmentFinishActivity.this,key,Toast.LENGTH_LONG).show();
 
         homeButton = findViewById(R.id.homeButtonId);
         homeButton.setOnClickListener(new View.OnClickListener() {
@@ -170,9 +235,19 @@ public class AppointmentFinishActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
-                finish();
             }
         });
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }

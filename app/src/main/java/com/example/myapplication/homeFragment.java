@@ -238,9 +238,6 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     public void onDestroyView() {
         list1.clear();
         list2.clear();
-
-
-
         super.onDestroyView();
     }
 
