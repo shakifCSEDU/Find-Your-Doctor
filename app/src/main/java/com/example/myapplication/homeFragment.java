@@ -130,9 +130,14 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                             visitDate = dataSnapshot.child("visitDate").getValue(String.class);
                             phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
 
+                            if(patientCancelState.equalsIgnoreCase("yes")){
+                                list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid,"#FF0000"));
 
+                            }else{
 
-                            list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid));
+                                list2.add(new homeUserClass(patientName,visitDate,visitId,phoneNumber,R.drawable.profile_picture,patientCancelState,patientConfirmState,patientUid,"#FFFFFF"));
+                            }
+
                         }
                         adapter.notifyDataSetChanged();
 
@@ -186,6 +191,8 @@ public class homeFragment extends Fragment implements View.OnClickListener {
             root.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    list1.clear();
+
                     if(snapshot.exists()){
                         String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType,doctorConfirmState,doctorCancelState,doctorUid;
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -201,8 +208,16 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                             phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
                             chamber = dataSnapshot.child("chamber").getValue(String.class);
                             doctorType = dataSnapshot.child("doctorType").getValue(String.class);
-                            list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid));
 
+
+                            if(doctorCancelState.equalsIgnoreCase("yes")){
+
+                                list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid,"#FF0000"));
+
+                            }else{
+                                list1.add(new homeUserClass(doctorName, visitDate,visitId,phoneNumber,doctorType , chamber,R.id.profileImageId,doctorCancelState,doctorConfirmState,doctorUid,"#FFFFFF"));
+
+                            }
                         }
 
                         adapter.notifyDataSetChanged();
@@ -225,6 +240,16 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
 
         homePageButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        list1.clear();
+        list2.clear();
+
+
+
+        super.onDestroyView();
     }
 
     @Override
