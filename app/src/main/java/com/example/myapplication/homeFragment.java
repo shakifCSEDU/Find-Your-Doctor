@@ -130,7 +130,7 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerOptions options =
+        FirebaseRecyclerOptions<homeUserClass>options =
                 new FirebaseRecyclerOptions.Builder<homeUserClass>()
                         .setQuery(root,homeUserClass.class).build();
 
@@ -150,16 +150,16 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
                                     if (snapshot.exists()){
 
-                                    String doctorName, visitDate, visitId, phoneNo, doctorType, chamber;
-                                    String doctorUid;
+                                    //String doctorName, visitDate, visitId, phoneNo, doctorType, chamber;
+                                    //String doctorUid;
 
-                                    doctorName = snapshot.child("doctorName").getValue().toString();
-                                    visitDate = snapshot.child("visitDate").getValue().toString();
-                                    visitId = snapshot.child("visitId").getValue().toString();
-                                    phoneNo = snapshot.child("doctorPhoneNumber").getValue().toString();
-                                    doctorType = snapshot.child("doctorType").getValue().toString();
-                                    chamber = snapshot.child("chamber").getValue().toString();
-                                    doctorUid = snapshot.child("doctorUid").getValue().toString();
+                                    final String doctorName = snapshot.child("doctorName").getValue().toString();
+                                    final String visitDate = snapshot.child("visitDate").getValue().toString();
+                                    final String visitId = snapshot.child("visitId").getValue().toString();
+                                    final String phoneNo = snapshot.child("doctorPhoneNumber").getValue().toString();
+                                    final String doctorType = snapshot.child("doctorType").getValue().toString();
+                                    final String chamber = snapshot.child("chamber").getValue().toString();
+                                    final String doctorUid = snapshot.child("doctorUid").getValue().toString();
 
 
                                     holder.nameTextView.setText(doctorName);
@@ -197,7 +197,7 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                                                     });
                                             db.getReference("Users").child(userID).child("Appointments")
                                                     .child(visitId).removeValue();
-
+                                    /// Work for remove slot.........
 
                                         }
                                     });
@@ -238,16 +238,16 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
                                     if (snapshot.exists()){
 
-                                        String patientName, visitDate, visitId, phoneNumber, patientCancelState, patientConfirmState, patientUid;
+                                        //String patientName, visitDate, visitId, phoneNumber, patientCancelState, patientConfirmState, patientUid;
 
-                                    patientUid = snapshot.child("patientUid").getValue(String.class);
-                                    patientCancelState = snapshot.child("patientCancelState").getValue(String.class);
-                                    patientConfirmState = snapshot.child("patientConfirmState").getValue(String.class);
-                                    visitId = snapshot.child("visitId").getValue(String.class);
+                                    final String patientUid = snapshot.child("patientUid").getValue(String.class);
+                                    final String patientCancelState = snapshot.child("patientCancelState").getValue(String.class);
+                                    final String patientConfirmState = snapshot.child("patientConfirmState").getValue(String.class);
+                                    final String visitId = snapshot.child("visitId").getValue(String.class);
 
-                                    patientName = snapshot.child("patientName").getValue(String.class);
-                                    visitDate = snapshot.child("visitDate").getValue(String.class);
-                                    phoneNumber = snapshot.child("patientPhoneNumber").getValue(String.class);
+                                    final String  patientName = snapshot.child("patientName").getValue(String.class);
+                                    final String visitDate = snapshot.child("visitDate").getValue(String.class);
+                                    final String  phoneNumber = snapshot.child("patientPhoneNumber").getValue(String.class);
 
                                     holder.nameTextView.setText(patientName);
                                     holder.visitIdTextView.setText(visitId);
@@ -283,6 +283,8 @@ public class homeFragment extends Fragment implements View.OnClickListener {
                                                     });
                                             db.getReference("Users").child(userID).child("Appointments")
                                                     .child(visitId).removeValue();
+
+                                            /// Work for remove slot.........
 
 
                                         }

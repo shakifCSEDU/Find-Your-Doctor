@@ -33,7 +33,7 @@
         tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/tipsFragment"
-        android:name="com.example.myapplication.tipsFragment"
+        android:name="com.example.myapplication.tips.tipsFragment"
         android:label="Tips"
         tools:layout="@layout/fragment_tips" />
     <fragment

@@ -157,6 +157,10 @@ public class AppointmentFinishActivity extends AppCompatActivity {
             }
         });
 
+        visitDateTextView.setText(visitDate);
+        appointmentIDTextView.setText(key);
+
+
         patientDatabaseReference  = FirebaseDatabase.getInstance().getReference("Users").child(patientUid);
         patientDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -174,8 +178,7 @@ public class AppointmentFinishActivity extends AppCompatActivity {
         });
 
 
-        visitDateTextView.setText(visitDate);
-        appointmentIDTextView.setText(key);
+
 
         Toast.makeText(AppointmentFinishActivity.this,"doctor name is" + patientName, Toast.LENGTH_LONG).show();
 
