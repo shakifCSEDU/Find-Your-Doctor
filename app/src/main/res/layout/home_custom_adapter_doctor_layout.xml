@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints"
-        app:cardBackgroundColor="@color/lightGray"
+
         app:cardCornerRadius="5dp"
         >
 
@@ -100,31 +100,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/visitIdTextViiewId"
                 app:layout_constraintVertical_bias="0.0" />
 
-            <Button
-                android:id="@+id/confirmButtonId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Confirm"
-                android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.235"
-                app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
-                app:layout_constraintTop_toBottomOf="@+id/visitIdTextViiewId"
-                app:layout_constraintVertical_bias="0.46" />
-
-            <Button
-                android:id="@+id/removeButtonId"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Remove"
-                android:textAllCaps="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.264"
-                app:layout_constraintStart_toEndOf="@+id/confirmButtonId"
-                app:layout_constraintTop_toBottomOf="@+id/visitIdTextViiewId"
-                app:layout_constraintVertical_bias="0.46" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

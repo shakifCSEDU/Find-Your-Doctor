@@ -87,7 +87,6 @@ public class searchDoctorFragment extends Fragment implements View.OnClickListen
             intent.putExtra("doctorType",chooseDoctorTypeString);
             startActivity(intent);
 
-
         }
         else if(view.getId() == R.id.chooseDateEditTextViewId){
             Calendar calendar = Calendar.getInstance();
@@ -104,9 +103,5 @@ public class searchDoctorFragment extends Fragment implements View.OnClickListen
             },year,month,date);
           datePickerDialog.show();
         }
-
-
-
-
     }
 }

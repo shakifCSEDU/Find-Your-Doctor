@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".patientRegistrationAcitivity"
-    android:background="@color/green"
+    android:background="@color/white"
     android:orientation="vertical"
     >
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:text="Please fill up the following information"
         android:textSize="25dp"
-        android:fontFamily="cursive"
+        android:fontFamily="@font/courgette"
         android:textColor="@color/purple_700"
         android:textStyle="bold"
         android:textAlignment="center"
@@ -32,6 +32,7 @@
 
 
     <ScrollView
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">

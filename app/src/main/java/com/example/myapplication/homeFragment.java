@@ -38,7 +38,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,10 +59,10 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
     private RecyclerView recyclerView;
     private View view;
-    private ListView listView;
+
 
     private Context context;
-    Boolean isDoctor  = false;
+
 
     private String userType, userID;
 
@@ -106,9 +110,82 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
             firebaseAuth = FirebaseAuth.getInstance();
             userID = firebaseAuth.getCurrentUser().getUid();
-
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
+
+
+            homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor"); // here we pass patient because we want to check who he is.
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(adapter);
+
+
+            root.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if (snapshot.exists()){
+
+                        String patientName,visitDate,visitId,phoneNumber,patientCancelState,patientConfirmState,patientUid;
+
+                        for (DataSnapshot dataSnapshot :snapshot.getChildren()){
+
+                            patientUid = dataSnapshot.child("patientUid").getValue(String.class);
+                            patientCancelState = dataSnapshot.child("patientCancelState").getValue(String.class);
+                            patientConfirmState = dataSnapshot.child("patientConfirmState").getValue(String.class);
+                            visitId = dataSnapshot.child("visitId").getValue(String.class);
+
+                            patientName = dataSnapshot.child("patientName").getValue(String.class);
+                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
+                            phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
+
+                            Calendar calendar = Calendar.getInstance();
+                            int year = calendar.get(Calendar.YEAR);
+                            int month = calendar.get(Calendar.MONTH);
+                            int date = calendar.get(Calendar.DATE);
+
+                            String[] parse = visitDate.split(" - ");
+
+                            int vdate = Integer.parseInt(parse[0]);
+                            int vmonth = Integer.parseInt(parse[1]);
+                            int vyear = Integer.parseInt(parse[2]);
+
+                            calendar = Calendar.getInstance();
+
+                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            String  currentDate = currentDateFormat.format(calendar.getTime());
+
+                            if(parse[0].length() == 1)parse[0] ="0"+parse[0];
+                            if(parse[1].length() == 1)parse[1] = "0"+parse[1];
+
+                            String vDate = parse[2]+parse[1]+parse[0];
+
+                            Date dateFrom , dateTo;
+
+
+                            try {
+                                dateFrom = currentDateFormat.parse(currentDate);
+                                dateTo = currentDateFormat.parse(vDate);
+                                if(dateFrom.compareTo(dateTo) >= 0)
+                                    list1.add(new homeUserClass(patientName , visitDate , visitId , phoneNumber));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                        adapter.notifyDataSetChanged();
+
+                    }
+                    else {
+                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
         }
 
@@ -118,9 +195,86 @@ public class homeFragment extends Fragment implements View.OnClickListener {
 
             firebaseAuth = FirebaseAuth.getInstance();
             userID = firebaseAuth.getCurrentUser().getUid();
-
             db = FirebaseDatabase.getInstance();
             root = db.getReference("Users").child(userID).child("Appointments");
+
+
+
+            homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient");
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            recyclerView.setLayoutManager(linearLayoutManager);
+            recyclerView.setAdapter(adapter);
+
+
+            root.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                    if(snapshot.exists()){
+                        String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType;
+
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()){
+                            visitId  = dataSnapshot.child("visitId").getValue(String.class);
+                            doctorName = dataSnapshot.child("doctorName").getValue(String.class);
+                            visitDate = dataSnapshot.child("visitDate").getValue(String.class);
+
+                            phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
+                            chamber = dataSnapshot.child("chamber").getValue(String.class);
+                            doctorType = dataSnapshot.child("doctorType").getValue(String.class);
+
+
+
+
+                            Calendar calendar = Calendar.getInstance();
+
+
+
+
+                            String[] parse = visitDate.split(" - ");
+
+                            int vdate = Integer.parseInt(parse[0]);
+                            int vmonth = Integer.parseInt(parse[1]);
+                            int vyear = Integer.parseInt(parse[2]);
+
+                            calendar = Calendar.getInstance();
+
+                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+                            String  currentDate = currentDateFormat.format(calendar.getTime());
+
+                            if(parse[0].length() == 1)parse[0] ="0"+parse[0];
+                            if(parse[1].length() == 1)parse[1] = "0"+parse[1];
+
+                            String vDate = parse[2]+parse[1]+parse[0];
+
+                           Date dateFrom , dateTo;
+
+
+                            try {
+                                dateFrom = currentDateFormat.parse(currentDate);
+                                dateTo = currentDateFormat.parse(vDate);
+                                if(dateFrom.compareTo(dateTo) >= 0)
+                                    list1.add(new homeUserClass(doctorName,visitDate,visitId,phoneNumber,doctorType,chamber));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+                    else{
+                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
         }
 
 
@@ -128,248 +282,12 @@ public class homeFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseRecyclerOptions<homeUserClass>options =
-                new FirebaseRecyclerOptions.Builder<homeUserClass>()
-                        .setQuery(root,homeUserClass.class).build();
-
-
-        if(userType.equals("1")){
-
-            FirebaseRecyclerAdapter<homeUserClass,myViewHolder>adapter =
-                    new FirebaseRecyclerAdapter<homeUserClass, myViewHolder>(options) {
-                        @Override
-                        protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull homeUserClass model) {
-
-                            String visitId = getRef(position).getKey();
-
-                            root.child(visitId).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                    if (snapshot.exists()){
-
-                                    //String doctorName, visitDate, visitId, phoneNo, doctorType, chamber;
-                                    //String doctorUid;
-
-                                    final String doctorName = snapshot.child("doctorName").getValue().toString();
-                                    final String visitDate = snapshot.child("visitDate").getValue().toString();
-                                    final String visitId = snapshot.child("visitId").getValue().toString();
-                                    final String phoneNo = snapshot.child("doctorPhoneNumber").getValue().toString();
-                                    final String doctorType = snapshot.child("doctorType").getValue().toString();
-                                    final String chamber = snapshot.child("chamber").getValue().toString();
-                                    final String doctorUid = snapshot.child("doctorUid").getValue().toString();
-
-
-                                    holder.nameTextView.setText(doctorName);
-                                    holder.visitDateTextView.setText(visitDate);
-                                    holder.visitIdTextView.setText(visitId);
-                                    holder.phoneNoTextView.setText(phoneNo);
-                                    holder.doctorTypeTextView.setText(doctorType);
-                                    holder.chamberTextView.setText(chamber);
-                                    Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
-
-                                    holder.removeButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            db.getReference("Users").child(doctorUid).child("Appointments")
-                                                    .child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            if (snapshot.exists()) {
-                                                                db.getReference("Users").child(doctorUid).child("Appointments")
-                                                                        .child(visitId).child("patientCancelState").setValue("yes")
-                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                                Toast.makeText(context, "PatientCancel State yes", Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        });
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                        }
-                                                    });
-                                            db.getReference("Users").child(userID).child("Appointments")
-                                                    .child(visitId).removeValue();
-                                    /// Work for remove slot.........
-
-                                        }
-                                    });
-                                }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                        }
-
-                        @NonNull
-                        @Override
-                        public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_patient_layout,parent,false);
-                            myViewHolder holder = new myViewHolder(view,"patient");
-                            return holder;
-                        }
-                    };
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
-        }
-        else{
-            FirebaseRecyclerAdapter<homeUserClass,myViewHolder>adapter =
-                    new FirebaseRecyclerAdapter<homeUserClass, myViewHolder>(options) {
-                        @Override
-                        protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull homeUserClass model) {
-
-                            String visitId = getRef(position).getKey();
-
-                            root.child(visitId).addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                    if (snapshot.exists()){
-
-                                        //String patientName, visitDate, visitId, phoneNumber, patientCancelState, patientConfirmState, patientUid;
-
-                                    final String patientUid = snapshot.child("patientUid").getValue(String.class);
-                                    final String patientCancelState = snapshot.child("patientCancelState").getValue(String.class);
-                                    final String patientConfirmState = snapshot.child("patientConfirmState").getValue(String.class);
-                                    final String visitId = snapshot.child("visitId").getValue(String.class);
-
-                                    final String  patientName = snapshot.child("patientName").getValue(String.class);
-                                    final String visitDate = snapshot.child("visitDate").getValue(String.class);
-                                    final String  phoneNumber = snapshot.child("patientPhoneNumber").getValue(String.class);
-
-                                    holder.nameTextView.setText(patientName);
-                                    holder.visitIdTextView.setText(visitId);
-                                    holder.visitDateTextView.setText(visitDate);
-                                    holder.phoneNoTextView.setText(phoneNumber);
-                                    Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
-
-
-                                    holder.removeButton.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View view) {
-
-                                            db.getReference("Users").child(patientUid).child("Appointments")
-                                                    .child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                            if (snapshot.exists()) {
-                                                                db.getReference("Users").child(patientUid).child("Appointments")
-                                                                        .child(visitId).child("doctorCancelState").setValue("yes")
-                                                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                                                            @Override
-                                                                            public void onComplete(@NonNull Task<Void> task) {
-                                                                                Toast.makeText(context, "DoctorCancel State yes", Toast.LENGTH_SHORT).show();
-                                                                            }
-                                                                        });
-                                                            }
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(@NonNull DatabaseError error) {
-
-                                                        }
-                                                    });
-                                            db.getReference("Users").child(userID).child("Appointments")
-                                                    .child(visitId).removeValue();
-
-                                            /// Work for remove slot.........
-
-
-                                        }
-                                    });
-
-                                }
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-
-                                }
-                            });
-
-                        }
-
-                        @NonNull
-                        @Override
-                        public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_doctor_layout,parent,false);
-                            myViewHolder holder = new myViewHolder(view,"doctor");
-                            return holder;
-                        }
-                    };
-            recyclerView.setAdapter(adapter);
-            adapter.startListening();
-        }
-
-
-
-
-
-
-    }
-
-    @Override
     public void onDestroyView() {
-        //list1.clear();
-        //list2.clear();
-
         super.onDestroyView();
+        list1.clear();
+        list2.clear();
+
     }
-
-
-
-
-
-    public static class myViewHolder extends RecyclerView.ViewHolder{
-        CircleImageView circleImageView;
-        TextView nameTextView,visitDateTextView,visitIdTextView,phoneNoTextView,doctorTypeTextView,chamberTextView;
-        Button confirmButton,removeButton;
-        CardView cardView;
-
-        public myViewHolder(@NonNull View view,String person) {
-            super(view);
-            if(person.equals("patient")){
-                circleImageView = (CircleImageView)view.findViewById(R.id.circleImageViewId);
-                nameTextView = (TextView)view.findViewById(R.id.userNameTextViewId);
-                visitDateTextView = (TextView)view.findViewById(R.id.visitDateTextViewId);
-                visitIdTextView = (TextView)view.findViewById(R.id.visitIdTextViiewId);
-                phoneNoTextView = (TextView)view.findViewById(R.id.phoneNoTextViewId);
-                doctorTypeTextView = (TextView)view.findViewById(R.id.doctorTypeTextViewId);
-                chamberTextView = (TextView)view.findViewById(R.id.chamberTextViewId);
-
-                confirmButton = (Button)view.findViewById(R.id.confirmButtonId);
-                removeButton  = (Button)view.findViewById(R.id.removeButtonId);
-                cardView = (CardView)view.findViewById(R.id.cardViewId);
-            }else{
-                circleImageView = view.findViewById(R.id.circleImageViewId);
-                nameTextView = view.findViewById(R.id.userNameTextViewId);
-                visitDateTextView = view.findViewById(R.id.visitDateTextViewId);
-                visitIdTextView = view.findViewById(R.id.visitIdTextViiewId);
-                phoneNoTextView = view.findViewById(R.id.phoneNoTextViewId);
-                confirmButton = view.findViewById(R.id.confirmButtonId);
-                removeButton = view.findViewById(R.id.removeButtonId);
-                cardView = view.findViewById(R.id.cardViewId);
-            }
-
-
-
-        }
-    }
-
 
     @Override
     public void onClick(View view) {

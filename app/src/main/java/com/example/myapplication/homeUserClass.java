@@ -14,26 +14,19 @@ public class homeUserClass {
 
     }
 
-    public homeUserClass(int imageId, String backgroundColor, String chamber, String doctorCancelState, String doctorConfirmState, String doctorName, String doctorPhoneNumber, String doctorType, String doctorUid, String issueDate, String issueTime, String patientCancelState, String patientConfirmState, String patientName, String patientPhoneNumber, String patientReview, String patientUid, String visitDate, String visitId) {
-        this.imageId = imageId;
-        this.backgroundColor = backgroundColor;
-        this.chamber = chamber;
-        this.doctorCancelState = doctorCancelState;
-        this.doctorConfirmState = doctorConfirmState;
+    public homeUserClass(String doctorName,String visitDate , String visitId, String doctorPhoneNumber,String doctorType , String chamber){
         this.doctorName = doctorName;
-        this.doctorPhoneNumber = doctorPhoneNumber;
-        this.doctorType = doctorType;
-        this.doctorUid = doctorUid;
-        this.issueDate = issueDate;
-        this.issueTime = issueTime;
-        this.patientCancelState = patientCancelState;
-        this.patientConfirmState = patientConfirmState;
-        this.patientName = patientName;
-        this.patientPhoneNumber = patientPhoneNumber;
-        this.patientReview = patientReview;
-        this.patientUid = patientUid;
         this.visitDate = visitDate;
         this.visitId = visitId;
+        this.doctorPhoneNumber = doctorPhoneNumber;
+        this.doctorType = doctorType;
+        this.chamber = chamber;
+    }
+    public homeUserClass(String patientName , String visitDate,String visitId,String patientPhoneNumber){
+        this.patientName = patientName;
+        this.visitDate  = visitDate;
+        this.visitId = visitId;
+        this.patientPhoneNumber = patientPhoneNumber;
     }
 
 

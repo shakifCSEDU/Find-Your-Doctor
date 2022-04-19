@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_margin="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <androidx.cardview.widget.CardView
@@ -10,8 +12,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     tools:ignore="MissingConstraints"
-    app:cardBackgroundColor="@color/lightGray"
-    app:cardCornerRadius="5dp"
+
+
+    app:cardCornerRadius="8dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -55,11 +58,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
 
+            android:layout_marginTop="16dp"
             android:fontFamily="@font/courgette"
             android:text="visitDate"
             android:textColor="@color/black"
-            android:textSize="15sp"
 
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -72,17 +76,16 @@
             android:layout_width="0dp"
             android:layout_height="21dp"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
             android:fontFamily="@font/courgette"
             android:text="visitID"
             android:textColor="@color/black"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.57"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
             app:layout_constraintTop_toBottomOf="@+id/visitDateTextViewId"
-            app:layout_constraintVertical_bias="0.095" />
+            app:layout_constraintVertical_bias="0.052" />
 
         <TextView
             android:id="@+id/phoneNoTextViewId"
@@ -120,43 +123,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="4dp"
             android:fontFamily="@font/courgette"
             android:text="Chamber"
             android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.474"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
-            app:layout_constraintTop_toBottomOf="@+id/doctorTypeTextViewId" />
+            app:layout_constraintTop_toBottomOf="@+id/doctorTypeTextViewId"
+            app:layout_constraintVertical_bias="0.212" />
 
-        <Button
-            android:id="@+id/confirmButtonId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Confirm"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.111"
-            app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
-            app:layout_constraintTop_toBottomOf="@+id/chamberTextViewId"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <Button
-            android:id="@+id/removeButtonId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Remove"
-            android:textAllCaps="false"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.494"
-            app:layout_constraintStart_toEndOf="@+id/confirmButtonId"
-            app:layout_constraintTop_toBottomOf="@+id/chamberTextViewId"
-            app:layout_constraintVertical_bias="0.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

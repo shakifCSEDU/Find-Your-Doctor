@@ -13,6 +13,7 @@ public class registrationDeciderActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration_decider);
+        this.setTitle("Registration Decider");
         patientRegistrationButton = (Button)findViewById(R.id.patientRegistrationButtonId);
         doctorRegistrationButton = (Button)findViewById(R.id.doctorRegistrationButtonId);
         patientRegistrationButton.setOnClickListener(this);

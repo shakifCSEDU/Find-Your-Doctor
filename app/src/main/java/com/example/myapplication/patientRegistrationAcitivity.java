@@ -43,7 +43,7 @@ public class patientRegistrationAcitivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_registration);
-
+        this.setTitle("Patient Registration");
 
         firstNameEditText = findViewById(R.id.firstName);
         lastNameEditText =findViewById(R.id.lastName);

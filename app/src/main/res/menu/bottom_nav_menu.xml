@@ -10,11 +10,7 @@
     android:title="@string/history"
     android:icon="@drawable/ic_history"
     />
-<item
-    android:id="@+id/notificationsFragment"
-    android:title="@string/notifications"
-    android:icon="@drawable/ic_notifications"
-    />
+
 <item
     android:id="@+id/tipsFragment"
     android:title="@string/tips"

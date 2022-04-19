@@ -10,8 +10,8 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImageViewId"
-        android:layout_width="150dp"
-        android:layout_height="100dp"
+        android:layout_width="250dp"
+        android:layout_height="120dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,10 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="50dp"
                 android:text="Doctor Name : "
+                android:textColor="@color/black"
                 android:textSize="15sp"
+                android:fontFamily="@font/courgette"
+
                 android:textStyle="bold" />
 
             <TextView
@@ -52,8 +55,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
+                android:textColor="@color/black"
                 android:layout_marginTop="50dp"
-                android:hint="Prodipta Sen Amartya"
+                android:fontFamily="@font/courgette"
+                android:text="Prodipta Sen Amartya"
+
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -69,16 +75,20 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Mobile Number : "
+                android:textColor="@color/black"
                 android:textSize="15sp"
+                android:fontFamily="@font/courgette"
                 android:textStyle="bold" />
 
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/mobileNumberDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:hint="01517006253"
+                android:text="01517006253"
+                android:fontFamily="@font/courgette"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -94,6 +104,8 @@
                 android:layout_marginTop="10dp"
                 android:text="Chamber : "
                 android:textSize="15sp"
+                android:fontFamily="@font/courgette"
+                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
@@ -102,7 +114,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:hint="01517006253"
+                android:textColor="@color/black"
+                android:text="01517006253"
+                android:fontFamily="@font/courgette"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -117,7 +131,9 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Institute : "
+                android:textColor="@color/black"
                 android:textSize="15sp"
+                android:fontFamily="@font/courgette"
                 android:textStyle="bold" />
 
             <TextView
@@ -126,7 +142,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:hint="01517006253"
+                android:text="01517006253"
+                android:textColor="@color/black"
+                android:fontFamily="@font/courgette"
+
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -141,6 +160,8 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Qualification : "
+                android:textColor="@color/black"
+                android:fontFamily="@font/courgette"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -150,7 +171,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:hint="01517006253"
+                android:text = "01517006253"
+                android:textColor="@color/black"
+                android:fontFamily="@font/courgette"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>

@@ -1,72 +1,125 @@
-//package com.example.myapplication;
-//
-//import android.annotation.SuppressLint;
-//import android.content.Context;
-//import android.graphics.Color;
-//import android.text.TextUtils;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.BaseAdapter;
-//import android.widget.Button;
-//import android.widget.TextView;
-//import android.widget.Toast;
-//
-//import androidx.annotation.NonNull;
-//import androidx.cardview.widget.CardView;
-//import androidx.recyclerview.widget.RecyclerView;
-//
-//import com.google.android.gms.tasks.OnCompleteListener;
-//import com.google.android.gms.tasks.Task;
-//import com.google.firebase.FirebaseApp;
-//import com.google.firebase.database.DataSnapshot;
-//import com.google.firebase.database.DatabaseError;
-//import com.google.firebase.database.DatabaseReference;
-//import com.google.firebase.database.FirebaseDatabase;
-//import com.google.firebase.database.ValueEventListener;
-//import com.squareup.picasso.Picasso;
-//
-//import java.util.ArrayList;
-//
-//import de.hdodenhof.circleimageview.CircleImageView;
-//
-//public class homeCustomAdapter extends BaseAdapter {
-//    private Context context;
-//    private ArrayList<homeUserClass>list = null;
-//    private String person;
-//    private DatabaseReference databaseReference;
-//    private String Rootuid;
-//
-//    public homeCustomAdapter(Context context, ArrayList<homeUserClass> list,String person,String Rootuid) {
-//
-//        this.context = context;
-//        this.list = list;
-//        this.person = person;
-//        this.Rootuid = Rootuid;
-//
-//        databaseReference = FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appointments");
-//
-//    }
-//
-//
-//    @Override
-//    public int getCount() {
-//        return list.size();
-//    }
-//
-//    @Override
-//    public Object getItem(int i) {
-//        return list.get(i);
-//    }
-//
-//    @Override
-//    public long getItemId(int i) {
-//        return i;
-//    }
-//
-//    @Override
-//    public View getView(int position, View view, ViewGroup parent) {
-//
+package com.example.myapplication;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
+public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.myViewHolder> {
+
+    private Context context;
+    private ArrayList<homeUserClass> list = null;
+    private String person;
+
+
+
+    public homeCustomAdapter(Context context, ArrayList<homeUserClass> list, String person) {
+
+        this.context = context;
+        this.list = list;
+        this.person = person;
+    }
+
+    @NonNull
+    @Override
+    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        if(person.equals("patient")){
+             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_patient_layout,parent,false);
+             myViewHolder holder = new myViewHolder(view);
+             return holder;
+        }
+        else{
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_doctor_layout,parent,false);
+            myViewHolder holder = new myViewHolder(view);
+            return holder;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+
+        if(person.equals("patient")){
+              holder.nameTextView.setText(list.get(position).getDoctorName());
+              holder.visitDateTextView.setText(list.get(position).getVisitDate());
+              holder.visitIdTextView.setText(list.get(position).getVisitId());
+              holder.phoneNoTextView.setText(list.get(position).getDoctorPhoneNumber());
+              holder.doctorTypeTextView.setText(list.get(position).getDoctorType());
+              holder.chamberTextView.setText(list.get(position).getChamber());
+              Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
+        }
+        else{
+             holder.nameTextView.setText(list.get(position).getPatientName());
+             holder.visitDateTextView.setText(list.get(position).getVisitDate());
+             holder.visitIdTextView.setText(list.get(position).getVisitId());
+             Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
+             holder.phoneNoTextView.setText(list.get(position).getPatientPhoneNumber());
+          }
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    class myViewHolder extends RecyclerView.ViewHolder {
+        CircleImageView circleImageView;
+        TextView nameTextView, visitDateTextView, visitIdTextView, phoneNoTextView, doctorTypeTextView, chamberTextView;
+
+
+        public myViewHolder(@NonNull View view) {
+            super(view);
+            if (person.equals("patient")) {
+
+
+                circleImageView = (CircleImageView) view.findViewById(R.id.circleImageViewId);
+                nameTextView = (TextView) view.findViewById(R.id.userNameTextViewId);
+                visitDateTextView = (TextView) view.findViewById(R.id.visitDateTextViewId);
+                visitIdTextView = (TextView) view.findViewById(R.id.visitIdTextViiewId);
+                phoneNoTextView = (TextView) view.findViewById(R.id.phoneNoTextViewId);
+                doctorTypeTextView = (TextView) view.findViewById(R.id.doctorTypeTextViewId);
+                chamberTextView = (TextView) view.findViewById(R.id.chamberTextViewId);
+
+            }
+            else {
+                circleImageView = view.findViewById(R.id.circleImageViewId);
+                nameTextView = view.findViewById(R.id.userNameTextViewId);
+                visitDateTextView = view.findViewById(R.id.visitDateTextViewId);
+                visitIdTextView = view.findViewById(R.id.visitIdTextViiewId);
+                phoneNoTextView = view.findViewById(R.id.phoneNoTextViewId);
+
+            }
+
+
+        }
+
+    }
+
+}
 //        CircleImageView circleImageView;
 //        TextView nameTextView,visitDateTextView,visitIdTextView,phoneNoTextView,doctorTypeTextView,chamberTextView;
 //        Button confirmButton,removeButton;
@@ -87,8 +140,7 @@
 //            doctorTypeTextView = (TextView)view.findViewById(R.id.doctorTypeTextViewId);
 //            chamberTextView = (TextView)view.findViewById(R.id.chamberTextViewId);
 //
-//            confirmButton = (Button)view.findViewById(R.id.confirmButtonId);
-//            removeButton  = (Button)view.findViewById(R.id.removeButtonId);
+//
 //            cardView = (CardView)view.findViewById(R.id.cardViewId);
 //
 //
@@ -97,61 +149,5 @@
 //
 //            doctorTypeTextView.setText(list.get(position).getDoctorType());
 //            chamberTextView.setText(list.get(position).getChamber());
-//            cardView.setCardBackgroundColor(Color.parseColor(list.get(position).getBackgroundColor()));
-//
-//
-//
-//
-//            removeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                    String visitId  = list.get(position).getVisitId();
-//                    // String doctorUid = list.get(position).getUid();
-//                   // DatabaseReference db =  FirebaseDatabase.getInstance().getReference("Users").child(doctorUid).child("Appointments");
-//
-//
-//                   // db.child(visitId).addListenerForSingleValueEvent(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                            if(snapshot.exists()){
-//                                db.child(visitId).child("patientCancelState").setValue("yes");
-//
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError error) {
-//
-//                        }
-//                    });
-//
-//                    FirebaseDatabase.getInstance().getReference("Users").child(Rootuid).child("Appointments")
-//                            .child(visitId).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                @Override
-//                                public void onComplete(@NonNull Task<Void> task) {
-//                                    list.remove(position);
-//                                    notifyDataSetChanged();
-//
-//                                }
-//                            });
-//
-//
-//
-//                }
-//            });
-//
-//
-//
-//        }
-//        else{
-//            if(view == null){
-//                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_custom_adapter_doctor_layout,parent,false);
-//
-//            }
-//        }
-//
-//
-//        return view;
-//    }
-//}
+
+

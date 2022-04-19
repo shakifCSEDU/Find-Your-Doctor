@@ -27,11 +27,6 @@
         android:label="History"
         tools:layout="@layout/fragment_history" />
     <fragment
-        android:id="@+id/notificationsFragment"
-        android:name="com.example.myapplication.NotificationsFragment"
-        android:label="Notifications"
-        tools:layout="@layout/fragment_notifications" />
-    <fragment
         android:id="@+id/tipsFragment"
         android:name="com.example.myapplication.tips.tipsFragment"
         android:label="Tips"
