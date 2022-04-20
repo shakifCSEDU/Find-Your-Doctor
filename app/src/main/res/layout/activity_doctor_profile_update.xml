@@ -239,6 +239,9 @@
                     android:id="@+id/specialityTxt"
                     android:textColor="@color/black"
                     android:fontFamily="monospace"
+                    android:autoSizeTextType="uniform"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:text="Dhanmondi"/>
 
             </com.google.android.material.textfield.TextInputLayout>

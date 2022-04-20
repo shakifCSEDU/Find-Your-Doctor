@@ -14,6 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
+            android:padding="8dp"
             >
 
 
@@ -76,20 +77,6 @@
                 app:layout_constraintStart_toEndOf="@+id/ImageViewId"
                 app:layout_constraintTop_toBottomOf="@+id/instituteTextViewId" />
 
-            <TextView
-                android:id="@+id/ratingTextViewId"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                android:fontFamily="@font/courgette"
-                android:text="Rating"
-                android:textColor="@color/dark"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/ImageViewId"
-                app:layout_constraintTop_toBottomOf="@+id/qualificationTextViewId" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

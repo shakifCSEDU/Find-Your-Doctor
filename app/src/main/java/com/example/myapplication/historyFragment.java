@@ -77,6 +77,8 @@ public class historyFragment extends Fragment {
 
             homeCustomAdapter adapter = new homeCustomAdapter(context,list2,"doctor"); // here we pass patient because we want to check who he is.
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
 
@@ -86,7 +88,7 @@ public class historyFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     if (snapshot.exists()){
 
-                        String patientName,visitDate,visitId,phoneNumber,patientCancelState,patientConfirmState,patientUid;
+                        String patientName,visitDate,visitId,phoneNumber,patientCancelState,patientConfirmState,patientUid,slot;
 
                         for (DataSnapshot dataSnapshot :snapshot.getChildren()){
 
@@ -98,40 +100,34 @@ public class historyFragment extends Fragment {
                             patientName = dataSnapshot.child("patientName").getValue(String.class);
                             visitDate = dataSnapshot.child("visitDate").getValue(String.class);
                             phoneNumber  = dataSnapshot.child("patientPhoneNumber").getValue(String.class);
+                            slot = dataSnapshot.child("slots").getValue(String.class);
+
 
                             Calendar calendar = Calendar.getInstance();
-                            int year = calendar.get(Calendar.YEAR);
-                            int month = calendar.get(Calendar.MONTH);
-                            int date = calendar.get(Calendar.DATE);
+
 
                             String[] parse = visitDate.split(" - ");
 
-                            int vdate = Integer.parseInt(parse[0]);
-                            int vmonth = Integer.parseInt(parse[1]);
-                            int vyear = Integer.parseInt(parse[2]);
-
-
+//                           //nt vdate = Integer.parseInt(parse[0]);
+//                            int vmonth = Integer.parseInt(parse[1]);
+//                            int vyear = Integer.parseInt(parse[2]);
+////
                             calendar = Calendar.getInstance();
 
-                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy - MM - dd");
 
                             String  currentDate = currentDateFormat.format(calendar.getTime());
 
+                            String[] parse1 = currentDate.split(" - ");
+//
                             if(parse[0].length() == 1)parse[0] ="0"+parse[0];
                             if(parse[1].length() == 1)parse[1] = "0"+parse[1];
-
+//
                             String vDate = parse[2]+parse[1]+parse[0];
+                            String cDate = parse1[0]+parse1[1]+parse1[2];
 
-                            Date dateFrom , dateTo;
-
-
-                            try {
-                                dateFrom = currentDateFormat.parse(currentDate);
-                                dateTo = currentDateFormat.parse(vDate);
-                                if(dateFrom.compareTo(dateTo) < 0)
-                                    list1.add(new homeUserClass(patientName , visitDate , visitId , phoneNumber));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
+                            if(vDate.compareTo(cDate) < 0){
+                                list2.add(new homeUserClass(patientName , visitDate , visitId , phoneNumber,slot));
                             }
 
                         }
@@ -139,7 +135,7 @@ public class historyFragment extends Fragment {
 
                     }
                     else {
-                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                        Toast.makeText(context," You don't have any history",Toast.LENGTH_LONG ).show();
                     }
                 }
 
@@ -164,6 +160,8 @@ public class historyFragment extends Fragment {
             homeCustomAdapter adapter = new homeCustomAdapter(context,list1,"patient");
 
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+            linearLayoutManager.setReverseLayout(true);
+            linearLayoutManager.setStackFromEnd(true);
             recyclerView.setLayoutManager(linearLayoutManager);
             recyclerView.setAdapter(adapter);
 
@@ -173,18 +171,9 @@ public class historyFragment extends Fragment {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                     if(snapshot.exists()){
-                        String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType;
+                        String doctorName, visitDate, visitId, phoneNumber, chamber, doctorType,slot;
 
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()){
-
-
-                            Calendar calendar = Calendar.getInstance();
-
-                            int year = calendar.get(Calendar.YEAR);
-                            int month = calendar.get(Calendar.MONTH);
-                            int date = calendar.get(Calendar.DATE);
-
-
 
                             visitId  = dataSnapshot.child("visitId").getValue(String.class);
                             doctorName = dataSnapshot.child("doctorName").getValue(String.class);
@@ -193,42 +182,40 @@ public class historyFragment extends Fragment {
                             phoneNumber = dataSnapshot.child("doctorPhoneNumber").getValue(String.class);
                             chamber = dataSnapshot.child("chamber").getValue(String.class);
                             doctorType = dataSnapshot.child("doctorType").getValue(String.class);
+                            slot = dataSnapshot.child("slots").getValue(String.class);
+
+                            Calendar calendar = Calendar.getInstance();
+
 
                             String[] parse = visitDate.split(" - ");
 
-                            int vdate = Integer.parseInt(parse[0]);
-                            int vmonth = Integer.parseInt(parse[1]);
-                            int vyear = Integer.parseInt(parse[2]);
-
-
+//                           //nt vdate = Integer.parseInt(parse[0]);
+//                            int vmonth = Integer.parseInt(parse[1]);
+//                            int vyear = Integer.parseInt(parse[2]);
+////
                             calendar = Calendar.getInstance();
 
-                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                            SimpleDateFormat currentDateFormat = new SimpleDateFormat("yyyy - MM - dd");
 
                             String  currentDate = currentDateFormat.format(calendar.getTime());
 
+                            String[] parse1 = currentDate.split(" - ");
+//
                             if(parse[0].length() == 1)parse[0] ="0"+parse[0];
                             if(parse[1].length() == 1)parse[1] = "0"+parse[1];
-
+//
                             String vDate = parse[2]+parse[1]+parse[0];
+                            String cDate = parse1[0]+parse1[1]+parse1[2];
 
-                            Date dateFrom , dateTo;
-
-
-                            try {
-                                dateFrom = currentDateFormat.parse(currentDate);
-                                dateTo = currentDateFormat.parse(vDate);
-                                if(dateFrom.compareTo(dateTo) >= 0)
-                                    list1.add(new homeUserClass(doctorName,visitDate,visitId,phoneNumber,doctorType,chamber));
-                            } catch (ParseException e) {
-                                e.printStackTrace();
+                            if(vDate.compareTo(cDate) < 0){
+                                list1.add(new homeUserClass(doctorName,visitDate,visitId,phoneNumber,doctorType,chamber,slot));
                             }
 
                         }
                         adapter.notifyDataSetChanged();
                     }
                     else{
-                        Toast.makeText(context," You don't have any next appointments",Toast.LENGTH_LONG ).show();
+                        Toast.makeText(context," You don't have any history",Toast.LENGTH_LONG ).show();
                     }
 
                 }

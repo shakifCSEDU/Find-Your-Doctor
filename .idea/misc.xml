@@ -11,6 +11,7 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/icon_home.xml" value="0.1245" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/icon_profile.xml" value="0.1245" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/roundbutton.xml" value="0.1605" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_appointment_finish.xml" value="0.13134057971014493" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_can_pay.xml" value="0.365625" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_confirmation_actitivity.xml" value="0.365625" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_doctor_description.xml" value="0.365625" />
@@ -47,12 +48,11 @@
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/grid_item.xml" value="0.365625" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_custom_adapter_doctor_layout.xml" value="0.365625" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_custom_adapter_layout.xml" value="0.3645833333333333" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_custom_adapter_patient_layout.xml" value="0.365625" />
+        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_custom_adapter_patient_layout.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/home_row_layout.xml" value="0.365625" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/payment_set.xml" value="0.3645833333333333" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/placeholder_row_home.xml" value="0.2484375" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/round_button.xml" value="0.2484375" />
-        <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/tips_layout.xml" value="0.3645833333333333" />
         <entry key="..\:/Users/USER/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/menu/bottom_nav_menu.xml" value="0.2484375" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/drawable/ic_clock.xml" value="0.1245" />
         <entry key="..\:/Users/sakif/AndroidStudioProjects/Find-Your-Doctor/app/src/main/res/layout/activity_main.xml" value="0.17447916666666666" />

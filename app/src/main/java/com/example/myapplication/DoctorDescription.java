@@ -61,7 +61,7 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
 
         getIntentData();
         
-        Toast.makeText(DoctorDescription.this,"Date " + uid, Toast.LENGTH_LONG).show();
+        //Toast.makeText(DoctorDescription.this,"Date " + uid, Toast.LENGTH_LONG).show();
 
 
         // Firebase database called ...
@@ -100,7 +100,7 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
                         String index1 = Integer.toString(index);
                         if(a.equals("1") || a.equals("2")){
                             customGrids.add(new CustomGrid(R.drawable.slot_background_red,"S"+index1));
-                            Toast.makeText(getApplicationContext(),"S"+index1+"is booked",Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(),"S"+index1+"is booked",Toast.LENGTH_SHORT).show();
                             seatSlot.put("S"+index,"100");
                         }
                         else{
@@ -139,7 +139,7 @@ public class DoctorDescription extends AppCompatActivity implements View.OnClick
                 // if(seatMap.get(seat).equals("0")) {
                 if (isSelectSlot[position] == 0) {
                     if(count>0){
-                        Toast.makeText(DoctorDescription.this,"You cannot select more than one slot at a time\nPlz unselect the previous one",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DoctorDescription.this,"You cannot select more than one slot at a time...Plz unselect the previous one",Toast.LENGTH_SHORT).show();
                     }
                     else if(seatSlot.get(slot).equals("0") && count == 0){
                         view.setBackgroundColor(Color.parseColor("#00FF00"));

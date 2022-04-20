@@ -99,7 +99,7 @@ public class loginActivity extends AppCompatActivity implements View.OnClickList
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                                     String userType = snapshot.getValue().toString();
-                                    Toast.makeText(loginActivity.this,"Logged In SuccessFully" + userType, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(loginActivity.this,"Logged In SuccessFully" + userType, Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                                     intent.putExtra("userType",userType);
                                     startActivity(intent);

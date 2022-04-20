@@ -4,10 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -63,6 +68,14 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
 
 
         slots = " ";
+
+        for (Map.Entry<String, String> entry : slotMap.entrySet()) {
+            String key = entry.getKey();
+            String value = entry.getValue();
+            if(value.equals("1")){
+                slots = slots + " " + key;
+            }
+        }
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         patientUid = firebaseUser.getUid();
 
@@ -112,6 +125,12 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
         button.setOnClickListener(this::onClick);
         layoutInflater = LayoutInflater.from(getApplicationContext());
 
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel("FindYourDoctor","FindYourDoctor", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
 
 
     }
@@ -158,11 +177,15 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
 
         if(v.getId() == R.id.payButtonId){
             if(!payContactNumber.isEmpty()) {
-                String message = "Your booking is  confirmed";
-                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_SHORT).show();
+                String message = "Your appointment booking is  confirmed";
 
-
-
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(CanPayActivity.this, "FindYourDoctor");
+                builder.setContentTitle("Appointment Booking Successful");
+                builder.setContentText(message);
+                builder.setSmallIcon(R.drawable.app_icon);
+                builder.setAutoCancel(true);
+                NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(CanPayActivity.this);
+                notificationManagerCompat.notify(1, builder.build());
 
                 firebaseDatabase = FirebaseDatabase.getInstance();
                 databaseReference = firebaseDatabase.getReference("Users").child(doctorUid).child("Schedule").child(visitDate);
@@ -179,18 +202,18 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
                                     databaseReference.child(seatIndex).setValue("1");
                                 }
                             }
-                            Toast.makeText(CanPayActivity.this, "Databsse updated", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(CanPayActivity.this, "Databsse updated", Toast.LENGTH_SHORT).show();
 
                         } else {
                             databaseReference.setValue(slotMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(Task<Void> task) {
-                                    Toast.makeText(CanPayActivity.this, "Database created", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CanPayActivity.this, "Database created", Toast.LENGTH_SHORT).show();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure( Exception e) {
-                                    Toast.makeText(CanPayActivity.this, "Databse creation failed", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(CanPayActivity.this, "Databse creation failed", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
@@ -207,7 +230,10 @@ public class CanPayActivity extends AppCompatActivity implements View.OnClickLis
                 intent.putExtra("patientUid",patientUid);
                 intent.putExtra("slots",slots);
                 intent.putExtra("visitDate",visitDate);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
 
             }else{
                 Toast.makeText(this, "Please give your payment contact number", Toast.LENGTH_SHORT).show();

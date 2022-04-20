@@ -37,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -65,6 +66,7 @@ public class PatientProfileUpdateActivity extends AppCompatActivity implements V
     private ImageView profileImage;
     private ImageButton imageButton;
     private String imageUrl = null;
+    HashMap<String,String> profileData = new HashMap<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +113,8 @@ public class PatientProfileUpdateActivity extends AppCompatActivity implements V
             }
         });
 
+
+
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -149,8 +153,6 @@ public class PatientProfileUpdateActivity extends AppCompatActivity implements V
         profileImage = (ImageView)findViewById(R.id.profileImageViewId);
         imageButton = (ImageButton)findViewById(R.id.selectImageButton);
     }
-
-
 
 
     private boolean isPhoneNoChanged() {

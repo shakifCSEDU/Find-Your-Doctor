@@ -7,7 +7,7 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         tools:context=".CanPay"
         android:orientation="vertical"
         >
@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:orientation="vertical"
+            android:background="@color/shimmer_color"
             >
 
             <LinearLayout
@@ -173,7 +174,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="Visit Time:"
+                    android:text="Advice:"
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:textStyle="bold"
@@ -185,7 +186,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:fontFamily="monospace"
-                    android:text="non-A/C"
+                    android:text="Please call before coming"
                     android:textColor="@color/black"
                     android:textSize="15sp" />
 
@@ -449,6 +450,5 @@
 
 
             />
-
     </LinearLayout>
 </ScrollView>

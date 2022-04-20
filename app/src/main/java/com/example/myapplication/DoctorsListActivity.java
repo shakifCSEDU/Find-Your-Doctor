@@ -91,6 +91,7 @@ public class DoctorsListActivity extends AppCompatActivity {
                                       list.add(new CustomRowItem((fName+" "+lName),institute,qualification,uid,visitDate));
                                   }
                               adapter.notifyDataSetChanged();
+
                             }
 
                             @Override
@@ -100,6 +101,9 @@ public class DoctorsListActivity extends AppCompatActivity {
                         });
 
                     }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"No doctor found",Toast.LENGTH_SHORT).show();
                 }
             }
 

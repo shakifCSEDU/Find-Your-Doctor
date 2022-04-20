@@ -18,8 +18,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,8 +29,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -39,6 +45,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.Queue;
 import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -58,7 +65,7 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity implements Vi
     private AutoCompleteTextView regionAutoCompleteTextView, specialityAutoCompleteTextView;
     private FirebaseAuth firebaseAuth;
     private FirebaseDatabase firebaseDatabase;
-    private DatabaseReference databaseReference,databaseReference1;
+    private DatabaseReference databaseReference,databaseReference1,databaseReference2;
     private FirebaseUser firebaseUser;
 
 
@@ -76,8 +83,6 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity implements Vi
         getIntentData();
 
         init();
-
-
 
 
         String[] doctorRegion = getResources().getStringArray(R.array.Dhaka_region);
@@ -125,16 +130,24 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity implements Vi
             }
         });
 
-        updateButton.setOnClickListener(new View.OnClickListener() {
+        specialityAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(isProfileImageChange ||  isFirstNameChanged() || isLastNameChanged() || isPasswordChanged() || isPhoneNoChanged() || isGenderChanged() || isRegionChanged() || isChamberChanged() || isInstituteChanged() || isEduQualificationChanged() || isSpecialityChanged()){
-                    Toast.makeText(getApplicationContext(), "Data has been Updated", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(getApplicationContext(), "data not changed ", Toast.LENGTH_SHORT).show();
-                }
+                Toast.makeText(getApplicationContext(), "Speciality cannnot be changed", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+                updateButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (isProfileImageChange || isFirstNameChanged() || isLastNameChanged() || isPasswordChanged() || isPhoneNoChanged() || isGenderChanged() || isRegionChanged() || isChamberChanged() || isInstituteChanged() || isEduQualificationChanged()) {
+                            Toast.makeText(getApplicationContext(), "Data has been Updated", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "data not changed ", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
 
 
     }
@@ -237,7 +250,40 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity implements Vi
     private boolean isRegionChanged() {
         if(!region.equals(regionAutoCompleteTextView.getText().toString())){
             databaseReference.child("region").setValue(regionAutoCompleteTextView.getText().toString());
+            databaseReference2 = FirebaseDatabase.getInstance().getReference("DoctorType").child(speciality);
+            Query query = databaseReference2.child(region).orderByChild("uid").equalTo(userId);
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                        appleSnapshot.getRef().removeValue();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    //
+                }
+            });
+
             region = regionAutoCompleteTextView.getText().toString();
+
+            String key = databaseReference2.push().getKey();
+
+            FirebaseDatabase.getInstance().getReference("DoctorType").child(speciality).child(region).child(key).child("uid").setValue(userId).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()){
+                       // Toast.makeText(DoctorProfileUpdateActivity.this, "okkkkkkkkkkkkkkk", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else{
+                        Toast.makeText(DoctorProfileUpdateActivity.this,task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+            });
+
             return true;
         }else {
             return false;
@@ -274,15 +320,6 @@ public class DoctorProfileUpdateActivity extends AppCompatActivity implements Vi
         }
     }
 
-    private boolean isSpecialityChanged() {
-        if(!region.equals(regionAutoCompleteTextView.getText().toString())){
-            databaseReference.child("region").setValue(regionAutoCompleteTextView.getText().toString());
-            region = regionAutoCompleteTextView.getText().toString();
-            return true;
-        }else {
-            return false;
-        }
-    }
     private void init(){
 
         profileImage = (ImageView)findViewById(R.id.profileImageViewId);

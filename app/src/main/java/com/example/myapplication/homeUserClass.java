@@ -7,28 +7,37 @@ public class homeUserClass {
     private String  chamber,doctorCancelState,
             doctorConfirmState,doctorName,doctorPhoneNumber,doctorType,doctorUid,
     issueDate,issueTime , patientCancelState , patientConfirmState,patientName,
-            patientPhoneNumber , patientReview,patientUid,visitDate,visitId;
+            patientPhoneNumber , patientReview,patientUid,visitDate,visitId, slot;
 
 
     public homeUserClass() {
 
     }
 
-    public homeUserClass(String doctorName,String visitDate , String visitId, String doctorPhoneNumber,String doctorType , String chamber){
+    public homeUserClass(String doctorName,String visitDate , String visitId, String doctorPhoneNumber,String doctorType , String chamber, String slot){
         this.doctorName = doctorName;
         this.visitDate = visitDate;
         this.visitId = visitId;
         this.doctorPhoneNumber = doctorPhoneNumber;
         this.doctorType = doctorType;
         this.chamber = chamber;
+        this.slot = slot;
     }
-    public homeUserClass(String patientName , String visitDate,String visitId,String patientPhoneNumber){
+    public homeUserClass(String patientName , String visitDate,String visitId,String patientPhoneNumber, String slot){
         this.patientName = patientName;
         this.visitDate  = visitDate;
         this.visitId = visitId;
         this.patientPhoneNumber = patientPhoneNumber;
+        this.slot = slot;
     }
 
+    public String getSlot() {
+        return slot;
+    }
+
+    public void setSlot(String slot) {
+        this.slot = slot;
+    }
 
     public int getImageId() {
         return imageId;

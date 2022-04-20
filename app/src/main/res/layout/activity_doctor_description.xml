@@ -10,15 +10,16 @@
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/doctorImageViewId"
-        android:layout_width="250dp"
-        android:layout_height="120dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        />
 
     <LinearLayout
         android:id="@+id/doctorDescriptionId"
@@ -30,7 +31,8 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.236">
+        app:layout_constraintVertical_bias="0.236"
+        android:background="@color/green">
 
 
         <LinearLayout
@@ -42,12 +44,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="10dp"
                 android:text="Doctor Name : "
-                android:textColor="@color/black"
                 android:textSize="15sp"
-                android:fontFamily="@font/courgette"
-
                 android:textStyle="bold" />
 
             <TextView
@@ -55,11 +54,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:textColor="@color/black"
-                android:layout_marginTop="50dp"
-                android:fontFamily="@font/courgette"
-                android:text="Prodipta Sen Amartya"
-
+                android:layout_marginTop="10dp"
+                android:hint="Prodipta Sen Amartya"
                 android:textSize="15sp" />
 
         </LinearLayout>
@@ -75,20 +71,16 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Mobile Number : "
-                android:textColor="@color/black"
                 android:textSize="15sp"
-                android:fontFamily="@font/courgette"
                 android:textStyle="bold" />
 
             <TextView
-                android:textColor="@color/black"
                 android:id="@+id/mobileNumberDescription"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:text="01517006253"
-                android:fontFamily="@font/courgette"
+                android:hint="01517006253"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -104,8 +96,6 @@
                 android:layout_marginTop="10dp"
                 android:text="Chamber : "
                 android:textSize="15sp"
-                android:fontFamily="@font/courgette"
-                android:textColor="@color/black"
                 android:textStyle="bold" />
 
             <TextView
@@ -114,9 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:textColor="@color/black"
-                android:text="01517006253"
-                android:fontFamily="@font/courgette"
+                android:hint="01517006253"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -131,9 +119,7 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Institute : "
-                android:textColor="@color/black"
                 android:textSize="15sp"
-                android:fontFamily="@font/courgette"
                 android:textStyle="bold" />
 
             <TextView
@@ -142,10 +128,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:text="01517006253"
-                android:textColor="@color/black"
-                android:fontFamily="@font/courgette"
-
+                android:hint="01517006253"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -160,8 +143,6 @@
                 android:layout_marginLeft="40dp"
                 android:layout_marginTop="10dp"
                 android:text="Qualification : "
-                android:textColor="@color/black"
-                android:fontFamily="@font/courgette"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -171,72 +152,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginTop="10dp"
-                android:text = "01517006253"
-                android:textColor="@color/black"
-                android:fontFamily="@font/courgette"
+                android:hint="01517006253"
                 android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
-
-    <Button
-        android:id="@+id/reviewsButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="monospace"
-        android:text="Reviews"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.099"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.063" />
-
-    <Button
-        android:id="@+id/locationButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Location"
-        android:textAllCaps="false"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
-        app:layout_constraintStart_toEndOf="@+id/reviewsButtonId"
-        app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.063" />
-
-    <TextView
-        android:id="@+id/ratingTextViewId"
-        android:layout_width="95dp"
-        android:layout_height="49dp"
-        android:fontFamily="cursive"
-        android:padding="5dp"
-        android:text="Rating 3*"
-        android:textColor="@color/black"
-        android:textSize="23sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/locationButtonId"
-        app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
-        app:layout_constraintVertical_bias="0.06" />
 
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+
         android:fontFamily="@font/courgette"
         android:text="Avaiable Slot"
-
         android:textColor="@color/black"
         android:textSize="20sp"
+
+
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.011"
-        app:layout_constraintStart_toStartOf="@+id/reviewsButtonId"
-        app:layout_constraintTop_toBottomOf="@+id/reviewsButtonId" />
+        app:layout_constraintHorizontal_bias="0.476"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/doctorDescriptionId"
+        app:layout_constraintVertical_bias="0.064" />
 
     <Button
         android:id="@+id/proceedButtonId"
@@ -253,13 +191,15 @@
     <GridView
         android:id="@+id/gridViewId"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="186dp"
         android:layout_marginStart="8dp"
-        android:numColumns="5"
         android:layout_marginTop="8dp"
+        android:numColumns="5"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintTop_toBottomOf="@+id/textView9"
+        app:layout_constraintVertical_bias="0.258" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

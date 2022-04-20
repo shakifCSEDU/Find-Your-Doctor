@@ -71,6 +71,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
               holder.doctorTypeTextView.setText(list.get(position).getDoctorType());
               holder.chamberTextView.setText(list.get(position).getChamber());
               Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
+              holder.slotTextView.setText(list.get(position).getSlot());
         }
         else{
              holder.nameTextView.setText(list.get(position).getPatientName());
@@ -78,6 +79,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
              holder.visitIdTextView.setText(list.get(position).getVisitId());
              Picasso.get().load(R.drawable.profile_picture).into(holder.circleImageView);
              holder.phoneNoTextView.setText(list.get(position).getPatientPhoneNumber());
+             holder.slotTextView.setText(list.get(position).getSlot());
           }
     }
 
@@ -88,7 +90,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
 
     class myViewHolder extends RecyclerView.ViewHolder {
         CircleImageView circleImageView;
-        TextView nameTextView, visitDateTextView, visitIdTextView, phoneNoTextView, doctorTypeTextView, chamberTextView;
+        TextView nameTextView, visitDateTextView, visitIdTextView, phoneNoTextView, doctorTypeTextView, chamberTextView, slotTextView;
 
 
         public myViewHolder(@NonNull View view) {
@@ -103,6 +105,8 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
                 phoneNoTextView = (TextView) view.findViewById(R.id.phoneNoTextViewId);
                 doctorTypeTextView = (TextView) view.findViewById(R.id.doctorTypeTextViewId);
                 chamberTextView = (TextView) view.findViewById(R.id.chamberTextViewId);
+                slotTextView = (TextView) view.findViewById(R.id.slot);
+
 
             }
             else {
@@ -111,7 +115,7 @@ public class homeCustomAdapter extends RecyclerView.Adapter<homeCustomAdapter.my
                 visitDateTextView = view.findViewById(R.id.visitDateTextViewId);
                 visitIdTextView = view.findViewById(R.id.visitIdTextViiewId);
                 phoneNoTextView = view.findViewById(R.id.phoneNoTextViewId);
-
+                slotTextView = (TextView) view.findViewById(R.id.slot);
             }
 
 

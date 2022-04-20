@@ -218,13 +218,13 @@ android:background="@color/white">
             android:gravity="center_horizontal">
 
             <Button
-                android:id="@+id/reviewsButton"
+                android:id="@+id/logoutButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:drawableLeft="@drawable/ic_baseline_rate_review_24"
-                android:text="Your Reviews"
+                android:drawableLeft="@drawable/ic_baseline_exit_to_app_24"
+                android:text="Log-out"
                 android:textSize="10dp"/>
 
             <Button
@@ -239,19 +239,6 @@ android:background="@color/white">
                 android:textSize="10dp"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_horizontal">
-
-            <Button
-                android:id="@+id/logoutButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Log-out"
-                android:drawableLeft="@drawable/ic_baseline_exit_to_app_24"/>
-        </LinearLayout>
 
 
     </LinearLayout>

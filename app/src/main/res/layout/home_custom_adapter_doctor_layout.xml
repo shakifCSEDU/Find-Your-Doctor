@@ -100,6 +100,21 @@
                 app:layout_constraintTop_toBottomOf="@+id/visitIdTextViiewId"
                 app:layout_constraintVertical_bias="0.0" />
 
+            <TextView
+                android:id="@+id/slot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="slot"
+                android:fontFamily="@font/courgette"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.356"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/phoneNoTextViewId"
+                app:layout_constraintVertical_bias="0.485" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 

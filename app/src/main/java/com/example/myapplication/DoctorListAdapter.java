@@ -44,9 +44,8 @@ public class DoctorListAdapter extends RecyclerView.Adapter<DoctorListAdapter.my
         holder.doctorNameTextView.setText(list.get(position).getName());
         holder.instituteTextView.setText(list.get(position).getInstitute());
         holder.qualification.setText(list.get(position).getEducationalQualification());
-        holder.rating.setText("3*");
         //Picasso.get().load()..placeholder(R.drawable.profile_picture).into(holder.imageView);
-        holder.imageView.setImageResource(R.drawable.profile_picture);
+        holder.imageView.setImageResource(R.drawable.login);
     }
 
     @Override

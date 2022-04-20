@@ -25,7 +25,6 @@
             android:id="@+id/circleImageViewId"
             android:layout_width="100dp"
             android:layout_height="150dp"
-
             android:layout_marginStart="2dp"
             android:layout_marginTop="2dp"
             android:layout_marginBottom="2dp"
@@ -87,6 +86,8 @@
             app:layout_constraintTop_toBottomOf="@+id/visitDateTextViewId"
             app:layout_constraintVertical_bias="0.052" />
 
+
+
         <TextView
             android:id="@+id/phoneNoTextViewId"
             android:layout_width="0dp"
@@ -118,6 +119,7 @@
             app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
             app:layout_constraintTop_toBottomOf="@+id/phoneNoTextViewId" />
 
+
         <TextView
             android:id="@+id/chamberTextViewId"
             android:layout_width="0dp"
@@ -132,6 +134,21 @@
             app:layout_constraintStart_toEndOf="@+id/circleImageViewId"
             app:layout_constraintTop_toBottomOf="@+id/doctorTypeTextViewId"
             app:layout_constraintVertical_bias="0.212" />
+
+        <TextView
+            android:id="@+id/slot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="slot"
+            android:fontFamily="@font/courgette"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.365"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chamberTextViewId"
+            app:layout_constraintVertical_bias="0.507" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
